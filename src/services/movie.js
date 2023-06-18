@@ -52,6 +52,23 @@ module.exports = class movieService {
     }
   }
 
+  async getAll(cond = null) {
+    try {
+      const where = { active: true, deleted: false };
+      const resData = await Models.Movie.findAll({
+        where,
+        attributes: ['movieID','title', 'dailyRentalRate','numberInStock'],
+        include:[
+          {model:Models.Genre,as:'Genre',attributes:['genreID','name']}
+        ]
+      });
+      return (resData);
+    } catch (e) {
+      //console.log(e);
+      throw new ApplicationError(e.message);
+    }
+  }
+
   async getOne(movieID) {
     try {
      

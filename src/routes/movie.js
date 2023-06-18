@@ -35,6 +35,19 @@ module.exports = (app) => {
   app.use('/movie', route);
   const genreService = new GrenreService();
   const movieService = new MovieService();
+
+   //here is the code for api
+
+  route.get(
+    '/api/',
+    async (req,res,next)=>{
+      const data = await movieService.getAll()
+      res.send(data)
+    }
+  )
+
+  //end the code for api
+
   route.get(
     '/',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
