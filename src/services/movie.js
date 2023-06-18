@@ -18,8 +18,9 @@ const {
 const Models = require('../models');
 const logger = require('../modules/logger');
 const Utils = require('../utilities');
+const { log } = require('handlebars');
 
-module.exports = class genreService {
+module.exports = class movieService {
 
   async get({
     req,
@@ -27,14 +28,21 @@ module.exports = class genreService {
   }) {
     try {
       logger.silly('Getting user db record');
-      const resData = await Models.Genre.findAndCountAll(
+      const resData = await Models.Movie.findAndCountAll(
         {
           ...pagination.init(req, {
             where: { deleted },
             defaultSort: ['createdOn', 'DESC'],
-            whereLike: ['name'],
-            allowedSortColumns: ['name','createdOn'],
+            whereLike: ['title','numberInStock','dailyRentalRate','$Genre.name$'],
+            allowedSortColumns: ['title','dailyRentalRate','numberInStock','createdOn',
+            {
+              key: 'Genre', model: { model: Models.Genre, as: 'Genre' }, field: 'name',
+            },
+          ],
           }),
+          include:[
+            { model: Models.Genre, as: 'Genre'}
+          ],
         },
       );
 
@@ -44,16 +52,17 @@ module.exports = class genreService {
     }
   }
 
-  async getOne(genreID) {
+  async getOne(movieID) {
     try {
      
-      const resData = await Models.Genre.findOne({
+      const resData = await Models.Movie.findOne({
         include:[
+          {model:Models.Genre,as:'Genre',attributes:['name']},
           {model:Models.Employee,as:'createdBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
           {model:Models.Employee,as:'updatedBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
           {model:Models.Employee,as:'deletedBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
         ],
-        where: { genreID },
+        where: { movieID },
       });
       return (resData);
     } catch (e) {
@@ -61,50 +70,50 @@ module.exports = class genreService {
     }
   }
 
-  async getAll(cond = null) {
-    try {
-      const where = { active: true, deleted: false };
-      const resData = await Models.Genre.findAll({
-        where,
-        attributes: ['name', 'genreID'],
-      });
-      return (resData);
-    } catch (e) {
-      //console.log(e);
-      throw new ApplicationError(e.message);
-    }
-  }
 
   /* PostFunction */
   async insert({
-    name,
+    title,
+    dailyRentalRate,
+    numberInStock,
+    genreID,
     createdEmployeeID,
   }) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      await Models.Genre.create({
-        name,
+      await Models.Movie.create({
+        title,
+        dailyRentalRate:parseFloat(dailyRentalRate),
+        numberInStock:parseInt(numberInStock),
+        genreID,
         createdEmployeeID,
       }, { transaction });
       await transaction.commit();
       return true;
     } catch (e) {
+      console.log(e)
       if (transaction) await transaction.rollback();
       throw new ApplicationError(e.message);
     }
   }
 
   async update({
-    name,
+    title,
+    dailyRentalRate,
+    numberInStock,
     genreID,
+    movieID,
     updatedEmployeeID,
   }) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      const resData = await Models.Genre.findOne({ where: { genreID }, transaction });
-      resData.name = name;
+      const resData = await Models.Movie.findOne({ where: { movieID }, transaction });
+      resData.title = title;
+      resData.dailyRentalRate = parseFloat(dailyRentalRate);
+      resData.numberInStock = parseInt(numberInStock);
+      resData.genreID = genreID;
       resData.updatedEmployeeID = updatedEmployeeID;
       resData.updatedOn = Date.now();
       await resData.save({ transaction });
@@ -116,11 +125,11 @@ module.exports = class genreService {
     }
   }
 
-  async changeStatus(genreID) {
+  async changeStatus(movieID) {
     try {
-      const data = await Models.Genre.findOne({
-        where: { genreID },
-        attributes: ['genreID', 'active'],
+      const data = await Models.Movie.findOne({
+        where: { movieID },
+        attributes: ['movieID', 'active'],
       });
       data.active = !data.active;
       await data.save();
@@ -130,11 +139,11 @@ module.exports = class genreService {
     }
   }
 
-  async trash(genreID, deletedEmployeeID) {
+  async trash(movieID, deletedEmployeeID) {
     try {
-      const resData = await Models.Genre.findOne({
-        where: { genreID },
-        attributes: ['genreID', 'deleted'],
+      const resData = await Models.Movie.findOne({
+        where: { movieID },
+        attributes: ['movieID', 'deleted'],
       });
       resData.deleted = !resData.deleted;
       if (resData.deleted) {
@@ -151,13 +160,13 @@ module.exports = class genreService {
     }
   }
 
-  async delete(genreID) {
+  async delete(movieID) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      const data = await Models.Genre.findOne({
-        where: { genreID },
-        attributes: ['genreID'],
+      const data = await Models.Movie.findOne({
+        where: { movieID },
+        attributes: ['movieID'],
         transaction,
       });
       await data.destroy({ transaction });

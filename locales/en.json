@@ -555,5 +555,18 @@
 	"Add Genre": "Add Genre",
 	"new genre created successfully": "new genre created successfully",
 	"Edit Genre": "Edit Genre",
-	"Genre Trash list": "Genre Trash list"
+	"Genre Trash list": "Genre Trash list",
+	"Movie": "Movie",
+	"Title": "Title",
+	"Rate": "Rate",
+	"Stock": "Stock",
+	"Select genre": "Select genre",
+	"Number in stock": "Number in stock",
+	"Daily Rental rate": "Daily Rental rate",
+	"Title is required": "Title is required",
+	"Please chose the genre": "Please chose the genre",
+	"Stock is required": "Stock is required",
+	"Rate is required": "Rate is required",
+	"Add Movie": "Add Movie",
+	"Edit Movie": "Edit Movie"
 }
