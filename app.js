@@ -23,6 +23,15 @@ const cookieParser = require('cookie-parser');
 // eslint-disable-next-line import/order
 const Utils = require('./src/utilities');
 
+
+//cross origin
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+
 // flash
 app.use(Utils.flash());
 
@@ -104,7 +113,7 @@ app.use(session({
 // eslint-disable-next-line import/order
 const middlewares = require('./src/middlewares/index');
 
-//app.use(middlewares.gatekeeper.authenticateUser(Models));
+app.use(middlewares.gatekeeper.authenticateUser(Models));
 
 i18n.configure({
   locales: ['en', 'ar'],

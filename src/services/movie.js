@@ -173,7 +173,26 @@ module.exports = class movieService {
       await resData.save();
       return (resData);
     } catch (e) {
-      console.log(e)
+      //console.log(e)
+      throw new ApplicationError(e);
+    }
+  }
+
+  async deleteFromAPI(movieID) {
+    try {
+      const resData = await Models.Movie.findOne({
+        where: { movieID },
+        attributes: ['movieID', 'deleted'],
+      });
+      if(resData.delete){
+        throw new Error('Movie already deleted')
+      }
+      resData.deleted = true;
+      resData.deletedOn = Date.now();
+      await resData.save();
+      return (resData);
+    } catch (e) {
+      //console.log(e)
       throw new ApplicationError(e);
     }
   }

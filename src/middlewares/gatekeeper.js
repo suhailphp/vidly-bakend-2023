@@ -18,6 +18,9 @@ module.exports.authenticateUser = function () {
       if (req.url.indexOf('/employee/login') === 0) {
         return next();
       }
+      if (req.url.indexOf('/api') === 0) {
+        return next();
+      }
       if (req.url.indexOf('/dist') === 0) {
         return next();
       }

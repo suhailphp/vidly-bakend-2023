@@ -33,19 +33,6 @@ module.exports = (app) => {
   app.use('/genre', route);
   const genreService = new GrenreService();
 
-  //here is the code for api
-
-  route.get(
-    '/api/',
-    async (req,res,next)=>{
-      res.header("Access-Control-Allow-Origin", "*");
-      const data = await genreService.getAll()
-      res.send(data)
-    }
-  )
-
-  //end the code for api
-
   route.get(
     '/',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
