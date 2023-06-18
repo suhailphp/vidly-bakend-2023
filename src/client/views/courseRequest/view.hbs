@@ -1,0 +1,293 @@
+<style>
+    .timeline-label .timeline-label {
+        width: 150px;
+    }
+    .timeline-label:before{
+        left: 151px;
+        right: 151px;
+    }
+
+    .enrolledTable thead{
+        display:none;
+    }
+
+</style>
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-grow-1">
+                <div class="symbol symbol-45px me-5">
+                    <img src="{{{bgImage}}}" alt="">
+                </div>
+                <div class="d-flex flex-column">
+                    <a class="text-gray-900 text-hover-primary fs-6 fw-bold">{{? LNG '==' 'ar' data.nameAr data.nameEn}}</a>
+                    {{{courseRequestApprovalLabel data.finalApproved data.HRApproved data.initApproved data.rejected LNG}}}
+                </div>
+            </div>
+        </div>
+
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+           <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <div class="modal-body ">
+
+        <div class="d-flex flex-stack fs-4 py-3">
+            <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">{{__ 'Details'}}
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+                    </svg>
+                </span>
+            </span></div>
+
+            <div class="d-flex justify-content-center">
+                {{{courseRequestActionButton data.finalApproved data.HRApproved data.initApproved data.transferred data.rejected EMPLOYEE.userType EMPLOYEE.userPrivileges LNG}}}
+            </div>
+         
+            <span data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Edit customer details" data-kt-initialized="1">
+                <a href="courseRequest/{{data.courseRequestID}}/edit" class="btn btn-sm btn-light-primary" >{{__ 'Edit'}}</a>
+            </span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div id="kt_user_view_details" class="collapse show mt-1 row">
+
+             <div class="row">
+                <div class="col-md-12 row mb-7">
+                    <label class="col-lg-2 fw-semibold text-muted">{{__ 'Department'}}</label>
+                    <div class="col-lg-10">
+                        <div class="d-flex ">
+                            {{? LNG '==' 'ar' data.department.nameAr data.department.nameEn}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 row mb-7">
+                    <label class="col-lg-2 fw-semibold text-muted">{{__ 'Description'}}</label>
+                    <div class="col-lg-10">
+                        <div class="d-flex ">
+                            {{{data.description}}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div id="kt_modal_users_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                        <form data-kt-search-element="form" class="w-100 position-relative mb-5" autocomplete="off" id="EmployeeEnrollForm">
+                            <input type="hidden" />
+                            <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="enrolledSearch" id="searchText"  />
+                            <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
+                                <span class="spinner-border h-15px w-15px align-middle text-muted"></span>
+                            </span>
+                            <span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5 d-none" data-kt-search-element="clear">
+                                <span class="svg-icon svg-icon-2 svg-icon-lg-1 me-0">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                    </svg>
+                                </span>
+                            </span>
+
+                        </form>
+                    </div>
+            
+                     <table class="table align-middle table-row-dashed enrolledTable" id="kt_table_users_enrolled">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer flex-start" style="padding: 0.5rem 1.7rem !important;">
+        <div class="row "  style="width: 100%;">
+            {{#if data.HRApproved}}
+                <div class="col "  style="width: 100%;">
+                    <div class="fw-bold">
+                        <span class="badge badge-light-info d-flex align-items-center fs-8 fw-semibold">
+                                <span class="svg-icon svg-icon-8 svg-icon-info me-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.3" d="M10.3 14.3L11 13.6L7.70002 10.3C7.30002 9.9 6.7 9.9 6.3 10.3C5.9 10.7 5.9 11.3 6.3 11.7L10.3 15.7C9.9 15.3 9.9 14.7 10.3 14.3Z" fill="currentColor"/>
+                                    <path d="M21 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22ZM11.7 15.7L17.7 9.70001C18.1 9.30001 18.1 8.69999 17.7 8.29999C17.3 7.89999 16.7 7.89999 16.3 8.29999L11 13.6L7.70001 10.3C7.30001 9.89999 6.69999 9.89999 6.29999 10.3C5.89999 10.7 5.89999 11.3 6.29999 11.7L10.3 15.7C10.5 15.9 10.8 16 11 16C11.2 16 11.5 15.9 11.7 15.7Z" fill="currentColor"/>
+                                </svg>
+                                </span>{{__ 'HR Approval'}}</span>
+                    </div>
+                    <div class="d-flex">
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img src="{{#if data.HRApprovedBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.HRApprovedBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt="">
+                        </div>
+                        <div class="ms-5">
+                            <div class="d-flex align-items-center">
+                                <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.HRApprovedBy.fullNameAr data.HRApprovedBy.fullNameEn}}</a>
+                            </div>
+                            <span class="text-muted fw-semibold mb-3">{{#if data.HRApprovedOn}}{{dateToStringSimple data.HRApprovedOn}}{{/if}}</span>
+                        </div>
+                    </div>
+                </div>
+            
+            {{/if}}
+             {{#if data.initApproved}}
+                <div class="col"  style="width: 100%;">
+                    <div class="fw-bold">
+                        <span class="badge badge-light-primary d-flex align-items-center fs-8 fw-semibold" style="width: 100%;">
+                            <span class="svg-icon svg-icon-8 svg-icon-primary me-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.3" d="M10.3 14.3L11 13.6L7.70002 10.3C7.30002 9.9 6.7 9.9 6.3 10.3C5.9 10.7 5.9 11.3 6.3 11.7L10.3 15.7C9.9 15.3 9.9 14.7 10.3 14.3Z" fill="currentColor"/>
+                                    <path d="M21 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22ZM11.7 15.7L17.7 9.70001C18.1 9.30001 18.1 8.69999 17.7 8.29999C17.3 7.89999 16.7 7.89999 16.3 8.29999L11 13.6L7.70001 10.3C7.30001 9.89999 6.69999 9.89999 6.29999 10.3C5.89999 10.7 5.89999 11.3 6.29999 11.7L10.3 15.7C10.5 15.9 10.8 16 11 16C11.2 16 11.5 15.9 11.7 15.7Z" fill="currentColor"/>
+                                </svg>
+                            </span>{{__ 'Initial Approval'}}
+                        </span>
+                    </div>
+                    <div class="d-flex">
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img src="{{#if data.initApprovedBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.initApprovedBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt="">
+                        </div>
+                        <div class="ms-5">
+                            <div class="d-flex align-items-center">
+                                <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.initApprovedBy.fullNameAr data.initApprovedBy.fullNameEn}}</a>
+                            </div>
+                            <span class="text-muted fw-semibold mb-3">{{#if data.initApprovedOn}}{{dateToStringSimple data.initApprovedOn}}{{/if}}</span>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if data.finalApproved}}
+                <div class="col" style="width: 100%;">
+                    <div class="fw-bold">
+                        <span class="badge badge-light-success d-flex align-items-center fs-8 fw-semibold">
+                            <span class="svg-icon svg-icon-8 svg-icon-success me-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.3" d="M10.3 14.3L11 13.6L7.70002 10.3C7.30002 9.9 6.7 9.9 6.3 10.3C5.9 10.7 5.9 11.3 6.3 11.7L10.3 15.7C9.9 15.3 9.9 14.7 10.3 14.3Z" fill="currentColor"/>
+                                    <path d="M21 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22ZM11.7 15.7L17.7 9.70001C18.1 9.30001 18.1 8.69999 17.7 8.29999C17.3 7.89999 16.7 7.89999 16.3 8.29999L11 13.6L7.70001 10.3C7.30001 9.89999 6.69999 9.89999 6.29999 10.3C5.89999 10.7 5.89999 11.3 6.29999 11.7L10.3 15.7C10.5 15.9 10.8 16 11 16C11.2 16 11.5 15.9 11.7 15.7Z" fill="currentColor"/>
+                                </svg>
+                            </span>{{__ 'Final Approval'}}
+                        </span>
+                    </div>
+                    <div class="d-flex">
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img src="{{#if data.finalApprovedBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.finalApprovedBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt="">
+                        </div>
+                        <div class="ms-5">
+                            <div class="d-flex align-items-center">
+                                <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.finalApprovedBy.fullNameAr data.finalApprovedBy.fullNameEn}}</a>
+                            </div>
+                            <span class="text-muted fw-semibold mb-3">{{#if data.finalApprovedOn}}{{dateToStringSimple data.finalApprovedOn}}{{/if}}</span>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if data.rejected}}
+                <div class="col" style="width: 100%;">
+                    <div class="fw-bold">
+                        <span class="badge badge-light-danger d-flex align-items-center fs-8 fw-semibold">
+                            <span class="svg-icon svg-icon-8 svg-icon-danger me-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.3" d="M10.3 14.3L11 13.6L7.70002 10.3C7.30002 9.9 6.7 9.9 6.3 10.3C5.9 10.7 5.9 11.3 6.3 11.7L10.3 15.7C9.9 15.3 9.9 14.7 10.3 14.3Z" fill="currentColor"/>
+                                    <path d="M21 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22ZM11.7 15.7L17.7 9.70001C18.1 9.30001 18.1 8.69999 17.7 8.29999C17.3 7.89999 16.7 7.89999 16.3 8.29999L11 13.6L7.70001 10.3C7.30001 9.89999 6.69999 9.89999 6.29999 10.3C5.89999 10.7 5.89999 11.3 6.29999 11.7L10.3 15.7C10.5 15.9 10.8 16 11 16C11.2 16 11.5 15.9 11.7 15.7Z" fill="currentColor"/>
+                                </svg>
+                            </span>{{__ 'Rejected By'}}
+                        </span>
+                    </div>
+                    <div class="d-flex">
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img src="{{#if data.rejectedBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.rejectedBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt="">
+                        </div>
+                        <div class="ms-5">
+                            <div class="d-flex align-items-center">
+                                <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.rejectedBy.fullNameAr data.rejectedBy.fullNameEn}}</a>
+                            </div>
+                            <span class="text-muted fw-semibold mb-3">{{#if data.rejectedOn}}{{dateToStringSimple data.rejectedOn}}{{/if}}</span>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    courseRequestID = '{{data.courseRequestID}}'
+    enrolledEmployeeTable = $("#kt_table_users_enrolled").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}courseRequest/'+courseRequestID+'/getEnrolledEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 5, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: false,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a  style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employee.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a ,'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'mobile',
+                orderable: false,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" >${row.employee.mobile}</div>`
+            },
+
+            {
+                name:'email',
+                orderable: false,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" >${row.employee.email}</div>`
+            },
+
+            
+            
+        ]
+    });
+        
+
+  	filterSearchErnrolledEmployeeTable = document.querySelector('[data-kt-user-table-filter="enrolledSearch"]');
+	filterSearchErnrolledEmployeeTable.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		enrolledEmployeeTable.search(e.target.value).draw();
+	});
+
+
+</script>

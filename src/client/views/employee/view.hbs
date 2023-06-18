@@ -1,0 +1,227 @@
+<style>
+    .timeline-label .timeline-label {
+        width: 150px;
+    }
+    .timeline-label:before{
+        left: 151px;
+        right: 151px;
+    }
+</style>
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-grow-1">
+                <div class="symbol symbol-45px me-5">
+                    {{{bgImage}}}
+                </div>
+                <div class="d-flex flex-column">
+                    <a class="text-gray-900 text-hover-primary fs-6 fw-bold">{{? LNG '==' 'ar' data.fullNameAr data.fullNameEn}}</a>
+                    <div class="badge badge-lg badge-light-primary d-inline">{{data.userType}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+           <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <div class="modal-body">
+
+       
+
+        <div class="d-flex flex-stack fs-4 py-3">
+            <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">{{__ 'Details'}}
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+                    </svg>
+                </span>
+            </span></div>
+            <span data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Edit customer details" data-kt-initialized="1">
+                <a onclick="Edit({{data.employeeID}})" class="btn btn-sm btn-light-primary" >{{__ 'Edit'}}</a>
+            </span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div id="kt_user_view_details" class="collapse show mt-4">
+
+            <div class="timeline-label">
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Name Arabic'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.fullNameAr}}</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Name English'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.fullNameEn}}</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Username'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.userName}}</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Military Number'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.militaryNumber}}</div>
+                </div>
+
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Mobile'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.mobile}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Email'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.email}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Department'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{? LNG '==' 'ar' data.department.nameAr data.department.nameEn}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Course Level'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{? LNG '==' 'ar' data.courseLevel.nameAr data.courseLevel.nameEn}}</div>
+                </div>
+               
+            </div>
+
+            
+        </div>
+
+    </div>
+
+
+
+    <div class="modal-footer flex-start">
+        {{#if data.createdBy}}
+            <div class="row "  style="width: 100%;">
+                <div class="fw-bold">
+                    <span class="badge badge-light-success d-flex align-items-center fs-8 fw-semibold">
+                            <span class="svg-icon svg-icon-8 svg-icon-success me-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.424 12.282l4.402 4.399-5.826 1.319 1.424-5.718zm15.576-6.748l-9.689 9.804-4.536-4.536 9.689-9.802 4.536 4.534zm-6 8.916v6.55h-16v-12h6.743l1.978-2h-10.721v16h20v-10.573l-2 2.023z" fill="currentColor"></path>
+                                </svg>
+                            </span>{{__ 'Created By'}}</span>
+                </div>
+                <div class="d-flex">
+
+                    <div class="symbol symbol-circle symbol-45px">
+                        {{!-- <img src="{{#if data.createdBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.createdBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt=""> --}}
+                        {{#if data.createdBy.profilePhotoDocumentID}}
+                            <img src="{{CONFIG.BASE_URL}}employee/document/{{data.createdBy.employeeID}}" alt="">
+                        {{else}}
+                            {{{nameToIcon data.createdBy.fullNameAr data.createdBy.fullNameEn LNG}}}
+                        {{/if}}
+                    </div>
+                    <div class="ms-5">
+                        <div class="d-flex align-items-center">
+                            <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.createdBy.fullNameAr data.createdBy.fullNameEn}}</a>
+                        </div>
+                        <span class="text-muted fw-semibold mb-3">{{#if data.createdOn}}{{dateToStringSimple data.createdOn}}{{/if}}</span>
+                    </div>
+                </div>
+            </div>
+            
+        {{/if}}
+
+        {{#if data.updatedBy}}
+            <div class="row"  style="width: 100%;">
+                <div class="fw-bold">
+                    <span class="badge badge-light-warning d-flex align-items-center fs-8 fw-semibold" style="width: 100%;">
+                        <span class="svg-icon svg-icon-8 svg-icon-warning me-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m21.897 13.404.008-.057v.002c.024-.178.044-.357.058-.537.024-.302-.189-.811-.749-.811-.391 0-.715.3-.747.69-.018.221-.044.44-.078.656-.645 4.051-4.158 7.153-8.391 7.153-3.037 0-5.704-1.597-7.206-3.995l1.991-.005c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-4.033c-.414 0-.75.336-.75.75v4.049c0 .414.336.75.75.75s.75-.335.75-.75l.003-2.525c1.765 2.836 4.911 4.726 8.495 4.726 5.042 0 9.217-3.741 9.899-8.596zm-19.774-2.974-.009.056v-.002c-.035.233-.063.469-.082.708-.024.302.189.811.749.811.391 0 .715-.3.747-.69.022-.28.058-.556.107-.827.716-3.968 4.189-6.982 8.362-6.982 3.037 0 5.704 1.597 7.206 3.995l-1.991.005c-.414 0-.75.336-.75.75s.336.75.75.75h4.033c.414 0 .75-.336.75-.75v-4.049c0-.414-.336-.75-.75-.75s-.75.335-.75.75l-.003 2.525c-1.765-2.836-4.911-4.726-8.495-4.726-4.984 0-9.12 3.654-9.874 8.426z" fill="currentColor"></path>
+                            </svg>
+                        </span>{{__ 'Updated By'}}
+                    </span>
+                </div>
+                <div class="d-flex">
+
+                    <div class="symbol symbol-circle symbol-45px">
+                        {{!-- <img src="{{#if data.updatedBy.profilePhotoDocumentID}}{{CONFIG.BASE_URL}}employee/document/{{data.updatedBy.employeeID}}{{else}}{{CONFIG.BASE_URL}}dist/assets/media/avatars/blank.png{{/if}}" alt=""> --}}
+                        {{#if data.updatedBy.profilePhotoDocumentID}}
+                            <img src="{{CONFIG.BASE_URL}}employee/document/{{data.updatedBy.employeeID}}" alt="">
+                        {{else}}
+                            {{{nameToIcon data.updatedBy.fullNameAr data.updatedBy.fullNameEn LNG}}}
+                        {{/if}}
+                    </div>
+                    <div class="ms-5">
+                        <div class="d-flex align-items-center">
+                            <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.updatedBy.fullNameAr data.updatedBy.fullNameEn}}</a>
+                        </div>
+                        <span class="text-muted fw-semibold mb-3">{{#if data.updatedOn}}{{dateToStringSimple data.updatedOn}}{{/if}}</span>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if data.deletedBy}}
+            <div class="row" style="width: 100%;">
+                <div class="fw-bold">
+                    <span class="badge badge-light-danger d-flex align-items-center fs-8 fw-semibold">
+                        <span class="svg-icon svg-icon-8 svg-icon-danger me-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z" fill="currentColor"></path>
+                            </svg>
+                        </span>{{__ 'Deleted By'}}
+                    </span>
+                </div>
+                <div class="d-flex">
+
+                    <div class="symbol symbol-circle symbol-45px">
+                        {{#if data.deletedBy.profilePhotoDocumentID}}
+                            <img src="{{CONFIG.BASE_URL}}employee/document/{{data.deletedBy.employeeID}}" alt="">
+                        {{else}}
+                            {{{nameToIcon data.deletedBy.fullNameAr data.deletedBy.fullNameEn LNG}}}
+                        {{/if}}
+                    </div>
+                    <div class="ms-5">
+                        <div class="d-flex align-items-center">
+                            <a  class="text-dark fw-bold text-hover-primary fs-5 me-4">{{? LNG '==' 'ar' data.deletedBy.fullNameAr data.deletedBy.fullNameEn}}</a>
+                        </div>
+                        <span class="text-muted fw-semibold mb-3">{{#if data.deletedOn}}{{dateToStringSimple data.deletedOn}}{{/if}}</span>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+
+  
+</div>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic | Bootstrap HTML, VueJS, React, Angular, Asp.Net Core, Rails, Spring, Blazor, Django, Flask & Laravel Admin Dashboard Theme
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../"/>
+		<title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular & Laravel by Keenthemes</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Flask & Laravel versions. Grab your copy now and get life-time updates for free." />
+		<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Flask & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Metronic | Bootstrap HTML, VueJS, React, Angular, Asp.Net Core, Rails, Spring, Blazor, Django, Flask & Laravel Admin Dashboard Theme" />
+		<meta property="og:url" content="https://keenthemes.com/metronic" />
+		<meta property="og:site_name" content="Keenthemes | Metronic" />
+		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="{{CONFIG.BASE_URL}}dist/assets/media/logos/favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+		<link href="{{CONFIG.BASE_URL}}dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{CONFIG.BASE_URL}}dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="app-blank app-blank">
+		<!--begin::Theme mode setup on page load-->
+		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
+		<!--end::Theme mode setup on page load-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root" id="kt_app_root">
+			<!--begin::Authentication - Sign-in -->
+			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+				<!--begin::Body-->
+				<div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+					<!--begin::Form-->
+					<div class="d-flex flex-center flex-column flex-lg-row-fluid">
+						<!--begin::Wrapper-->
+						<div class="w-lg-500px p-10">
+							<!--begin::Form-->
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" enctype="multipart/form-data">
+								<!--begin::Heading-->
+								<div class="text-center mb-11">
+									<!--begin::Title-->
+									<h1 class="text-dark fw-bolder mb-3">{{__ 'Sign In'}}</h1>
+									<!--end::Title-->
+									<!--begin::Subtitle-->
+									<div class="text-gray-500 fw-semibold fs-6">{{__ 'Store Application'}}</div>
+									<!--end::Subtitle=-->
+								</div>
+
+								<div class="row g-3 mb-9">
+							
+					
+									<div class="col-md-12">
+										<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+										<img alt="Logo" src="{{CONFIG.BASE_URL}}dist/assets/media/logos/psa.png" class="theme-light-show h-15px me-3" />
+										<img alt="Logo" src="{{CONFIG.BASE_URL}}dist/assets/media/logos/psa.png" class="theme-dark-show h-15px me-3" />{{__ 'Smart Login'}}</a>
+									</div>
+									<!--end::Col-->
+								</div>
+								<!--end::Login options-->
+								<!--begin::Separator-->
+								<div class="separator separator-content my-14">
+									<span class="w-125px text-gray-500 fw-semibold fs-7">{{__ 'Or with username'}}</span>
+								</div>
+								<!--end::Separator-->
+								<!--begin::Input group=-->
+								<div class="fv-row mb-8">
+									<!--begin::Email-->
+									<input type="text" placeholder="username" name="userName" id="userName" autocomplete="off" class="form-control bg-transparent" />
+									<!--end::Email-->
+								</div>
+								<!--end::Input group=-->
+								<div class="fv-row mb-3">
+									<!--begin::Password-->
+									<input type="password" placeholder="Password" name="password" id="password" autocomplete="off" class="form-control bg-transparent" />
+									<!--end::Password-->
+								</div>
+								<!--end::Input group=-->
+								<!--begin::Wrapper-->
+								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+									<div></div>
+									<!--begin::Link-->
+									<a href="../../demo1/dist/authentication/layouts/corporate/reset-password.html" class="link-primary">Forgot Password ?</a>
+									<!--end::Link-->
+								</div>
+								<!--end::Wrapper-->
+								<!--begin::Submit button-->
+								<div class="d-grid mb-10">
+									<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+										<!--begin::Indicator label-->
+										<span class="indicator-label">Sign In</span>
+										<!--end::Indicator label-->
+										<!--begin::Indicator progress-->
+										<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+										<!--end::Indicator progress-->
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url(dist/assets/media/misc/auth-bg.png)">
+					<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+						<a href="#" class="mb-0 mb-lg-12">
+							<img alt="Logo" src="{{CONFIG.BASE_URL}}dist/assets/media/logos/psa-logo-with-text-light.png" class="h-60px h-lg-75px" />
+						</a>
+						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{CONFIG.BASE_URL}}dist/assets/media/misc/auth-screens.png" alt="" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="{{CONFIG.BASE_URL}}dist/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="{{CONFIG.BASE_URL}}dist/assets/js/scripts.bundle.js"></script>
+		<script src="{{CONFIG.BASE_URL}}dist/js/all.min.js"></script>
+
+		<script >
+
+		var hostUrl = "{{CONFIG.BASE_URL}}dist/assets/";
+		const BASE_URL = '{{BASE_URL}}';
+		function __(s){ return s}
+
+
+		// Class definition
+		var KTSigninGeneral = function() {
+			// Elements
+			var form;
+			var submitButton;
+			var validator;
+
+			// Handle form
+			var handleForm = function(e) {
+				// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+				validator = FormValidation.formValidation(
+					form,
+					{
+						fields: {					
+							'userNamne': {
+								validators: {
+									notEmpty: {
+										message: '{{__ "username address is required'"}}'
+									}
+								}
+							},
+							'password': {
+								validators: {
+									notEmpty: {
+										message: '{{__ "The password is required"}}'
+									}
+								}
+							} 
+						},
+						plugins: {
+							trigger: new FormValidation.plugins.Trigger(),
+							bootstrap: new FormValidation.plugins.Bootstrap5({
+								rowSelector: '.fv-row',
+								eleInvalidClass: '',  // comment to enable invalid state icons
+								eleValidClass: '' // comment to enable valid state icons
+							})
+						}
+					}
+				);		
+
+				// Handle form submit
+				submitButton.addEventListener('click', function (e) {
+					// Prevent button default action
+					e.preventDefault();
+
+					// Validate form
+					validator.validate().then(function (status) {
+						if (status == 'Valid') {
+							// Show loading indication
+							submitButton.setAttribute('data-kt-indicator', 'on');
+
+							// Disable button to avoid multiple click 
+							submitButton.disabled = true;
+							
+
+						
+							// Hide loading indication
+							submitButton.removeAttribute('data-kt-indicator');
+							// Enable button
+							submitButton.disabled = false;
+						
+							request('employee/login', {
+								method: 'POST',
+								body: $(validator.form).serializeFormJSON()
+							})
+							.then(response => {
+								console.log(response)
+								if(response){
+									PSA.toast.success(response.message)
+									window.location.replace(BASE_URL)
+								}
+								else{
+									submitButton.setAttribute('data-kt-indicator', 'off');
+									submitButton.disabled = false;
+									PSA.toast.error(response.message)
+								}
+								//location.reload();
+							})
+							.catch(PSA.exception.catch)
+                         
+
+														
+						} else {
+							// Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+							 Swal.fire({
+                                text: '{{__ "Sorry, looks like there are some errors detected, please try again."}}',
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "{{__ 'ok'}}",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+						}
+					});
+				});
+			}
+
+			// Public functions
+			return {
+				// Initialization
+				init: function() {
+					form = document.querySelector('#kt_sign_in_form');
+					submitButton = document.querySelector('#kt_sign_in_submit');
+					
+					handleForm();
+				}
+			};
+		}();
+
+		// On document ready
+		KTUtil.onDOMContentLoaded(function() {
+			KTSigninGeneral.init();
+		});
+
+		</script>
+
+		{{>message}}
+
+
+	</body>
+	<!--end::Body-->
+</html>

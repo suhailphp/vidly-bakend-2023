@@ -1,0 +1,508 @@
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="form_modal_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bold">{{#compare mode '===' 'add'}}{{__ 'Add employee'}}{{else}}{{__ 'Edit employee'}}{{/compare}}</h2>
+        <!--end::Modal title-->
+         <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+           <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+        <!--begin::Form-->
+        <form id="form_modal_form" class="form" action="#"  enctype="multipart/form-data">
+            <!--begin::Scroll-->
+            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="form_modal_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#form_modal_header" data-kt-scroll-wrappers="#form_modal_scroll" data-kt-scroll-offset="300px">
+                <div class="fv-row mb-7">
+                    <label class="d-block fw-semibold fs-6 mb-5">{{__ 'profile Photo'}}</label>
+                    <style>.image-input-placeholder { background-image: url('{{CONFIG.BASE_URL}}dist/assets/media/svg/files/blank-image.svg'); } [data-theme="dark"] .image-input-placeholder { background-image: url('{{CONFIG.BASE_URL}}dist/assets/media/svg/files/blank-image-dark.svg'); }</style>
+                    <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true" style="margin-left: 20px;margin-right: 20px;">
+                        <div class="image-input-wrapper w-125px h-125px" 
+                        style="background-image: url('{{{bgImage}}}');"></div>
+                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                            <i class="bi bi-pencil-fill fs-7"></i>
+                            <input type="file" name="profilePhoto" id="profilePhoto" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="avatar_remove" />
+                        </label>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                    </div>
+                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                </div>
+           
+                
+
+                <div class="row g-9 " >
+                     <div class="col-md-6 fv-row">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Military Number'}}</label>
+                        <div class="input-group mb-5">
+                            <input type="number" class="form-control"  name="militaryNumber" id="militaryNumber"  aria-label="{{__ 'Military Number'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Military Number'}}" value="{{data.militaryNumber}}">
+                            <span class="input-group-text" id="basic-addon2">
+                                <i class="fas fa-person-military-pointing fs-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 fv-row">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Username'}}</label>
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control"  name="userName" id="userName"  aria-label="{{__ 'Username'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Username'}}" value="{{data.userName}}">
+                            <span class="input-group-text" id="basic-addon2">
+                                <i class="fas fa-user fs-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                  <div class="row g-9 " >
+                    
+                    <div class="col-md-6 fv-row">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Full Name Arabic'}}</label>
+                        <input type="text" name="fullNameAr" id="fullNameAr" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Full name Arabic'}}" value="{{data.fullNameAr}}" />
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Full Name English'}}</label>
+                        <input type="text" name="fullNameEn" id="fullNameEn" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Full Name English'}}" value="{{data.fullNameEn}}" />
+                    </div>
+                </div>
+
+          
+
+                <div class="row g-9 " >
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Email'}}</label>
+                        <div class="input-group mb-5">
+                            <input type="email" class="form-control "  name="email" id="email"  aria-label="{{__ 'Email'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Email'}}" value="{{data.email}}">
+                            <span class="input-group-text" id="basic-addon2">
+                                <i class="fas fa-envelope-open-text fs-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 fv-row">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Mobile'}}</label>
+                        <div class="input-group mb-5">
+                            <input type="text" class="form-control"  name="mobile" id="mobile"  aria-label="{{__ 'Mobile'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Mobile'}}" value="{{data.mobile}}">
+                            <span class="input-group-text" id="basic-addon2">
+                                <i class="fas fa-mobile fs-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fv-row mb-7">
+                    <label class="required fs-6 fw-semibold mb-2">{{__ 'User Role'}}</label>
+                    <select class="form-select " data-control=""  data-placeholder="{{__ 'Select user role'}}" name="userType" id="userType" >
+                        <option></option>
+                        <option value="SUPER-ADMIN" {{#compare data.userType '===' 'SUPER-ADMIN'}}selected{{/compare}}>{{__ 'Super Admin'}}</option>
+                        <option value="ADMIN" {{#compare data.userType '===' 'ADMIN'}}selected{{/compare}} >{{__ 'Admin'}}</option>
+                        <option value="USER" {{#compare data.userType '===' 'USER'}}selected{{/compare}}>{{__ 'User'}}</option>
+                        <option value="DEPARTMENT-HEAD" {{#compare data.userType '===' 'DEPARTMENT-HEAD'}}selected{{/compare}}>{{__ 'Department Head'}}</option>
+                    </select>
+                </div>
+
+                {{#if levelData}}
+                    {{#each levelData}}
+                        <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep{{this.level}}" >
+                            {{#compare this.level '===' 1}}
+                                <label class=" fs-6 fw-semibold ">{{__ 'Department'}}</label>
+                            {{/compare}}
+                            <select class="form-select " data-control=""  data-placeholder="{{__ 'Select department'}}" name="departmentID" id="departmentID{{this.level}}" onchange="DepChange(this)">
+                                <option></option>
+                                {{#each this.departments}}
+                                    <option value="{{this.departmentID}}" {{#compare this.departmentID '===' ../this.curDepartmentID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
+                                {{/each}}
+                            </select>
+                            <script type="text/javascript">
+                                $('#departmentID{{this.level}}').select2({dropdownParent: $('#form_modal')});
+                            </script>
+                        </div>
+                    {{/each}}
+
+                    {{#each emptyDiv}}
+                        <div class="col-md-12 fv-row fv-plugins-icon-container" id="Dep{{this.level}}" style="display: none;"></div>
+                    {{/each}}
+
+                {{else}}
+
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep1" >
+                        <label class=" fs-6 fw-semibold mb-2">{{__ 'Department'}}</label>
+                        <select class="form-select " data-control=""  data-placeholder="{{__ 'Select parent department'}}" name="departmentID" id="departmentID" onchange="DepChange(this)">
+                            <option></option>
+                            {{#each departments}}
+                                <option value="{{this.departmentID}}" {{#compare this.departmentID '===' ../data.departmentID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep2" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep3" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep4" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep5" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep6" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep7" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep8" style="display: none;">
+                    </div>
+                    <div class="col-md-12 fv-row fv-plugins-icon-container mb-2" id="Dep9" style="display: none;">
+                    </div>
+
+                {{/if}}
+
+                <div class="row g-9 " data-select2-id="select2-data-123-s6w3">
+                    <div class="col-md-12 fv-row fv-plugins-icon-container" >
+                            <label class=" fs-6 fw-semibold mb-2">{{__ 'Course Level'}}</label>
+                            <select class="form-select " data-control=""  data-placeholder="{{__ 'Select Course Level'}}" name="courseLevelID" id="courseLevelID" >
+                                <option></option>
+                                {{#each courseLevel}}
+                                    <option value="{{this.courseLevelID}}" {{#compare this.courseLevelID '===' ../data.courseLevelID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                </div>
+
+                <div class="fv-row mb-5 mt-3">
+                    <div class="d-flex flex-stack">
+                        <div class="me-5">
+                            <label class="fs-5 fw-semibold">{{__ 'Enable Active directory Authentication ?'}}</label>
+                            <div class="fs-7 fw-semibold text-muted">{{__ 'login by active directory user name and password'}}</div>
+                        </div>
+                        <label class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" name="ADLogin" id="ADLogin" type="checkbox" value="1" {{#if data.ADLogin}}checked="checked"{{/if}}>
+                            <span class="form-check-label fw-semibold text-muted" id="ADYesOrNo">{{__ 'Yes'}}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row g-9 mb-8" data-select2-id="select2-data-123-s6w3" id="PasswordDiv" >
+                    <div class="col-md-6 fv-row fv-plugins-icon-container" >
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Password'}}</label>
+                        <input type="password" name="password" id="password" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Password'}}"   />
+                    </div>
+                    <div class="col-md-6 fv-row">
+                        <label class="required fw-semibold fs-6 mb-2">{{__ 'Confirm'}}</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control mb-3 mb-lg-0" placeholder="{{__ 'Confirm password'}}" />
+                    </div>
+                </div>
+
+            
+            </div>
+            <!--end::Scroll-->
+            <!--begin::Actions-->
+            <div class="text-center pt-15">
+                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{__ 'Discard'}}</button>
+                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                    <span class="indicator-label">{{__ 'Submit'}}</span>
+                    <span class="indicator-progress">{{__ 'Please wait...'}}
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+                <input type="hidden" name="mode" id="mode" value="{{mode}}">
+                <input type="hidden" name="employeeID" id="employeeID" value="{{data.employeeID}}">
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+    </div>
+
+
+
+<script type="text/javascript">
+    mode = $('#mode').val()
+    "use strict";
+    $('#userType').select2({dropdownParent: $('#form_modal'),})
+    $('#courseLevelID').select2({dropdownParent: $('#form_modal'),})
+    $('#departmentID').select2({dropdownParent: $('#form_modal'),})
+    KTImageInput.init()
+    $('#ADLogin').change(()=>{
+        const ADLogin = document.getElementById('ADLogin');
+        if(ADLogin.checked) {
+            //$('#PasswordDiv').hide('slow')
+            $('#ADYesOrNo').html("{{__ 'Yes'}}")
+        }
+        else{
+            //$('#PasswordDiv').show('slow')
+            $('#ADYesOrNo').html("{{__ 'No'}}")
+        }
+        
+    })
+   
+// Class definition
+    var KTUsersAddUser = function () {
+        // Shared variables
+        const element = document.getElementById('form_modal');
+        const form = element.querySelector('#form_modal_form');
+        const modal = new bootstrap.Modal(element);
+        // Init add schedule modal
+        var initAddUser = () => {
+            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+            var validator = FormValidation.formValidation(
+                form,
+                {
+                    fields: {
+                        'userName': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "user name is required"}}'
+                                }
+                            }
+                        },
+                         'fullNameEn': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Full name English is required"}}'
+                                }
+                            }
+                        },
+                         'fullNameAr': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Full name arabic is required"}}'
+                                }
+                            }
+                        },
+                         'userType': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "User Roleis is required"}}'
+                                }
+                            }
+                        },
+                         'mobile': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Mobile Number required"}}'
+                                },
+                                phone: {
+                                    value: '(+971) 52 794 7523',
+                                    options: {
+                                        country: 'AE',
+                                        message: '{{__ "The value is not a valid phone number"}}',
+                                    },
+                                }
+                                
+                            }
+                        },
+                        'email': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "email address is required"}}'
+                                },
+                                emailAddress:{
+                                    message: '{{__ "Valid email address is required"}}'
+                                }
+                            }
+                        },
+                         'militaryNumber': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Military Number is required"}}'
+                                }
+                            }
+                        },
+                        'password': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Password is required"}}'
+                                }
+                            }
+                        },
+                        'confirmPassword': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Password is required"}}'
+                                }
+                            }
+                        },
+                        'departmentID': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Please chose the department"}}'
+                                }
+                            }
+                        },
+                        'courseLevelID': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Please chose the course Level"}}'
+                                }
+                            }
+                        },
+                    },
+      
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                            rowSelector: '.fv-row',
+                            eleInvalidClass: '',
+                            eleValidClass: ''
+                        }),
+                        
+                    }
+                }
+            );
+         
+            // Submit button handler
+            const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
+            submitButton.addEventListener('click', e => {
+                e.preventDefault();
+                // Validate form before submit
+                if (validator) {
+                    validator.validate().then(function (status) {
+                        if (status == 'Valid') {
+                            // Show loading indication
+                            submitButton.setAttribute('data-kt-indicator', 'on');
+                            // Disable button to avoid multiple click 
+                            submitButton.disabled = true;
+                            //
+                            const formData = new FormData(validator.form); 
+                            //console.log(formData)
+                            
+                            if($('#password').val() === $('#confirmPassword').val()){
+                                request('employee', {
+                                    method: 'POST',
+                                    files: true,
+                                    body: formData
+                                })
+                                .then(response => {
+                                    if(response){
+                                        PSA.toast.success("{{__ 'employee created successfully'}} ")
+                                        $('#kt_table_users').DataTable().ajax.reload();
+                                        modal.hide();
+                                    }
+                                    else{
+                                        submitButton.setAttribute('data-kt-indicator', 'off');
+                                        submitButton.disabled = false;
+                                        PSA.toast.error("{{__ 'Username already taken, Please try another one!'}} ")
+                                    }
+                                    //location.reload();
+                                })
+                                .catch(PSA.exception.catch)
+                            }
+                            else{
+                                submitButton.setAttribute('data-kt-indicator', 'off');
+                                submitButton.disabled = false;
+                                PSA.toast.error("{{__ 'Password not matchin, please try again!'}} ")
+                            }
+                            
+                        } else {
+                            // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            Swal.fire({
+                                text: '{{__ "Sorry, looks like there are some errors detected, please try again."}}',
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "{{__ 'ok'}}",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            // Cancel button handler
+            const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
+            cancelButton.addEventListener('click', e => {
+                e.preventDefault();
+                Swal.fire({
+                    text: "Are you sure you would like to cancel?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "Yes, cancel it!",
+                    cancelButtonText: "No, return",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-active-light"
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        form.reset(); // Reset form			
+                        modal.hide();	
+                    } else if (result.dismiss === 'cancel') {
+                        Swal.fire({
+                            text: "Your form has not been cancelled!.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn btn-primary",
+                            }
+                        });
+                    }
+                });
+            });
+            
+        }
+        return {
+            // Public functions
+            init: function () {
+                initAddUser();
+            }
+        };
+    }();
+    // On document ready
+    KTUtil.onDOMContentLoaded(function () {
+        KTUsersAddUser.init();
+    });
+
+     function DepChange(ref){
+        let departmentID = (ref.value)?ref.value:ref
+        if(departmentID){
+            request(`/employee/${departmentID}/checkParentDep`)
+            .then(response => {
+                if (response && response.level) {
+                     for(let i = response.level;i<=5;i++){
+                        $('#Dep'+i).html(null);
+                        $('#Dep'+i).hide();
+                    }
+                    if(response.html){
+                        $('#Dep'+response.level).html(response.html);
+                        $('#departmentID'+response.level).select2({dropdownParent: $('#form_modal')});
+                        $('#Dep'+response.level).show('slow');
+                    }
+                } else {
+                    PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
+                }
+            })
+            .catch(PSA.exception.catch)
+            }
+    }
+
+    $('#militaryNumber').change(function(){
+        let militaryNumber = $('#militaryNumber').val()
+        request(`/employee/${militaryNumber}/fetchStaffFromHCM`)
+            .then(response => {
+                if (response && response.employeeID == militaryNumber) {
+                    $('#userName').val(response.employeeEmail.split('@')[0])
+                    $('#fullNameAr').val(response.arabicEmployeeName)
+                    $('#fullNameEn').val(response.englishEmployeeName)
+                    $('#mobile').val(response.employeeMobileNo)
+                    $('#email').val(response.employeeEmail)
+                } else {
+                    PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
+                }
+            })
+            .catch(PSA.exception.catch)
+    })
+</script>

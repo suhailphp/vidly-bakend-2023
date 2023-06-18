@@ -1,0 +1,1233 @@
+<style>
+    .dataTables_wrapper table thead{
+    display:none;
+}
+</style>
+
+<div class="app-container" id="itemContainer">
+    <form id="itemForm" class="form" action="#"  enctype="multipart/form-data">
+        <div class="card ">
+            <div class="card-body pt-9 pb-0">
+                <!--begin::Details-->
+                <div class="d-flex flex-wrap flex-sm-nowrap">
+                    <!--begin: Pic-->
+                    <div class="me-7 mb-4">
+                    <label class="d-block fw-semibold fs-6 mb-5">{{__ 'Course icon'}}</label>
+                        <style>.image-input-placeholder { background-image: url('{{CONFIG.BASE_URL}}dist/assets/media/svg/files/blank-image.svg'); } [data-theme="dark"] .image-input-placeholder { background-image: url('{{CONFIG.BASE_URL}}dist/assets/media/svg/files/blank-image-dark.svg'); }</style>
+                        <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true" style="margin-left: 20px;margin-right: 20px;">
+                            <div class="image-input-wrapper w-125px h-125px" 
+                            style="background-image: url('{{{bgImage}}}');"></div>
+                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                <i class="bi bi-pencil-fill fs-7"></i>
+                                <input type="file" name="logo" id="logo" accept=".png, .jpg, .jpeg" />
+                                <input type="hidden" name="avatar_remove" />
+                            </label>
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                <i class="bi bi-x fs-2"></i>
+                            </span>
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                <i class="bi bi-x fs-2"></i>
+                            </span>
+                        </div>
+                        <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                    </div>
+            
+                    <div class="flex-grow-1">
+                        <!--start::Product Type-->
+                        <div class="d-flex justify-content-between align-items-start flex-wrap ">
+                            <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                                <div class="row">
+                                    <label class="required fw-semibold fs-6 mb-5">{{__ 'Course type'}}</label>
+                                    <div class="col-lg-6">
+                                        <input type="radio" class="btn-check" name="courseType" value="internal" id="courseTypeInternal" {{#compare data.courseType '==' 'internal'}}checked="checked"{{/compare}}>
+                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center h-50" for="courseTypeInternal">
+                                            <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
+                                                <path opacity="0.3" d="M10.3 15.3L11 14.6L8.70002 12.3C8.30002 11.9 7.7 11.9 7.3 12.3C6.9 12.7 6.9 13.3 7.3 13.7L10.3 16.7C9.9 16.3 9.9 15.7 10.3 15.3Z" fill="currentColor"/>
+                                                <path d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.20001C9.70001 3 10.2 3.20001 10.4 3.60001ZM11.7 16.7L16.7 11.7C17.1 11.3 17.1 10.7 16.7 10.3C16.3 9.89999 15.7 9.89999 15.3 10.3L11 14.6L8.70001 12.3C8.30001 11.9 7.69999 11.9 7.29999 12.3C6.89999 12.7 6.89999 13.3 7.29999 13.7L10.3 16.7C10.5 16.9 10.8 17 11 17C11.2 17 11.5 16.9 11.7 16.7Z" fill="currentColor"/>
+                                                </svg>
+                                            </span>
+                                            <span class="d-block fw-semibold text-start">
+                                                <span class="text-dark fw-bold d-block fs-3">{{__ 'Internal trainings'}}</span>
+                                                <span class="text-muted fw-semibold fs-6"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                 
+                                    <div class="col-lg-6">
+                                         <input type="radio" class="btn-check" name="courseType" value="external" id="courseTypeExternal" {{#compare data.courseType '==' 'external'}}checked="checked"{{/compare}}>
+                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center h-50" for="courseTypeExternal">
+                                            <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
+                                                <path opacity="0.3" d="M12 14.4L9.89999 16.5C9.69999 16.7 9.39999 16.8 9.19999 16.8C8.99999 16.8 8.7 16.7 8.5 16.5C8.1 16.1 8.1 15.5 8.5 15.1L10.6 13L12 14.4ZM13.4 13L15.5 10.9C15.9 10.5 15.9 9.90001 15.5 9.50001C15.1 9.10001 14.5 9.10001 14.1 9.50001L12 11.6L13.4 13Z" fill="currentColor"/>
+                                                <path d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.2C9.7 3 10.2 3.20001 10.4 3.60001ZM13.4 13L15.5 10.9C15.9 10.5 15.9 9.9 15.5 9.5C15.1 9.1 14.5 9.1 14.1 9.5L12 11.6L9.89999 9.5C9.49999 9.1 8.9 9.1 8.5 9.5C8.1 9.9 8.1 10.5 8.5 10.9L10.6 13L8.5 15.1C8.1 15.5 8.1 16.1 8.5 16.5C8.7 16.7 9 16.8 9.2 16.8C9.4 16.8 9.69999 16.7 9.89999 16.5L12 14.4L14.1 16.5C14.3 16.7 14.6 16.8 14.8 16.8C15 16.8 15.3 16.7 15.5 16.5C15.9 16.1 15.9 15.5 15.5 15.1L13.4 13Z" fill="currentColor"/>
+                                                </svg>
+                                            </span>
+                                            <span class="d-block fw-semibold text-start">
+                                                <span class="text-dark fw-bold d-block fs-3">{{__ 'External trainings'}}</span>
+                                                <span class="text-muted fw-semibold fs-6"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Product Type-->
+
+                        <!--start::Barcode-->
+                        <div class="row g-9 " >
+                            <div class="col-md-6 fv-row mb-7">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Name Arabic'}}</label>
+                                <div class="input-group mb-0">
+                                    <input type="text" name="nameAr" id="nameAr" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Course name in Arabic'}}" value="{{data.nameAr}}" />
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-language fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 fv-row mb-7">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Name English'}}</label>
+                                <div class="input-group mb-0">
+                                    <input type="text" name="nameEn" id="nameEn" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Course name in English'}}" value="{{data.nameEn}}" />
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-language fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Barcode-->
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body">
+                 
+
+                        <div class="fv-row mb-7">
+                            <label class="required fw-semibold fs-6 mb-2">{{__ 'Course Date and Time'}}</label>
+                            <div class="input-group mb-0">
+                                <input type="text" name="dateRange" id="dateRange" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Pick course duration'}}" value="01/16/2023 14:00:00 - 05/17/2023 22:00:00" />
+                                <span class="input-group-text" id="basic-addon2">
+                                    <i class="fas fa-calendar fs-4"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span class="required">{{__ 'Weekdays'}}</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__ 'Please select the weekdays for the course.'}}"></i>
+                            </label>
+                            <!--end::Label-->
+                            <input class="form-control " value="{{data.weekdays}}" name="weekdays" id="weekdays" placeholder="{{__ 'Course days'}}" />
+                        </div>
+
+                    
+
+                         <div class="row g-9 " >
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Location'}}</label>
+                                <div class="input-group mb-0">
+                                    <input type="text" name="location" id="location" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Course location'}}" value="{{data.location}}" />
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-location fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 fv-row">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Amount'}}</label>
+                                <div class="input-group mb-5">
+                                    <input type="number" class="form-control"  name="amount" id="amount"  aria-label="{{__ 'Amount'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Course amount'}}" value="{{data.amount}}">
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-inr fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-9 " >
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Quota'}}</label>
+                                <div class="input-group mb-5">
+                                    <input type="number" class="form-control "  name="quota" id="quota"  aria-label="{{__ 'quota'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Quota'}}" value="{{data.quota}}">
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-users fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 fv-row">
+                                <label class="required fw-semibold fs-6 mb-2">{{__ 'Waiting list'}}</label>
+                                <div class="input-group mb-5">
+                                    <input type="number" class="form-control "  name="waitingList" id="waitingList"  aria-label="{{__ 'Waiting list'}}" aria-describedby="basic-addon2" placeholder="{{__ 'Waiting list'}}" value="{{data.waitingList}}">
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="fas fa-users fs-4"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row g-9 " data-select2-id="select2-data-123-s6w3" id="courseCategoryDiv">
+                            <div class="col-md-12 fv-row fv-plugins-icon-container" >
+                                    <label class=" fs-6 fw-semibold mb-2">{{__ 'Course Category'}}</label>
+                                    <select class="form-select" data-placeholder="{{__ 'Select Course Category'}}" name="courseCategoryID" id="courseCategoryID" >
+                                        <option></option>
+                                        {{#each courseCategory}}
+                                            <option value="{{this.courseCategoryID}}" {{#compare this.courseCategoryID '===' ../data.courseCategoryID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="row g-9 " data-select2-id="select2-data-123-s6w3" id="courseDepartmentDiv" style="display:none">
+                            <div class="col-md-12 fv-row fv-plugins-icon-container" >
+                                    <label class=" fs-6 fw-semibold mb-2">{{__ 'Course Department'}}</label>
+                                    <select class="form-select" data-placeholder="{{__ 'Select Course department'}}" name="courseDepartmentID" id="courseDepartmentID" >
+                                        <option></option>
+                                        {{#each courseDepartment}}
+                                            <option value="{{this.courseDepartmentID}}" {{#compare this.courseDepartmentID '===' ../data.courseDepartmentID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="row g-9  mt-2" >
+                            <div class="col-md-12 fv-row">
+                                    <div class="input-group">
+                                    <span class="input-group-text">{{__ 'Description'}}</span>
+                                    <textarea class="form-control" aria-label="With textarea" name="description" id="description">{{data.description}}</textarea>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="fv-row mb-5 mt-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-5 fw-semibold">{{__ 'Open Enrollment ?'}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{__ '"Yes" indicates open enrollment, allowing employees to enroll themselves.'}}</div>
+                                </div>
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" name="openEnrollment" id="openEnrollment" type="checkbox" value="1" {{#if data.ADLogin}}checked="checked"{{/if}}>
+                                    <span class="form-check-label fw-semibold text-muted" id="ADYesOrNo">{{__ 'No'}}</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="dropzone dropzone-queue" id="kt_inbox_reply_attachments" data-kt-inbox-form="dropzone">
+                            <div class="overflow-auto pb-5 ">
+                                <div class="d-flex align-items-center border-gray-300 rounded p-5">
+                                    {{#each attachments}}
+                                        <div class="d-flex flex-aligns-center pe-10 pe-lg-20" id="DocumentDiv{{this.documentID}}">
+                                            {{{messageAttachemntIcon this}}}
+                                                                                            
+                                            <div class="ms-1 fw-semibold">
+                                                <a onclick="viewDocument({{this.documentID}})" class="fs-6 text-hover-primary fw-bold">{{this.fileName}}</a>
+                                                <div class="text-gray-400">
+                                                    <span class="dropzone-delete" onclick="deleteDocument({{this.documentID}})" style="cursor: pointer;"><i class="bi bi-x fs-1" style="color:red"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/each}}
+
+                                </div>
+                            </div>
+                            
+                            <div class="dropzone-items">
+
+                                
+                                <div class="dropzone-item" style="display:none">
+                                    <!--begin::Dropzone filename-->
+                                    <div class="dropzone-file">
+                                        <div class="dropzone-filename" title="some_image_file_name.jpg">
+                                            <span data-dz-name="">some_image_file_name.jpg</span>
+                                            <strong>(
+                                            <span data-dz-size="">340kb</span>)</strong>
+                                        </div>
+                                        <div class="dropzone-error" data-dz-errormessage=""></div>
+                                    </div>
+
+                                    <div class="dropzone-progress">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress=""></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="dropzone-toolbar">
+                                        <span class="dropzone-delete" data-dz-remove="">
+                                            <i class="bi bi-x fs-1"></i>
+                                        </span>
+                                    </div>
+                                    <!--end::Dropzone toolbar-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Attachments-->
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center pt-0 ">
+                            
+                            <!--begin::Upload attachement-->
+                            <span class="btn btn-icon btn-sm btn-clean btn-active-light-primary me-2" id="kt_inbox_reply_attachments_select" data-kt-inbox-form="dropzone_upload">
+                                <!--begin::Svg Icon | path: icons/duotune/communication/com008.svg-->
+                                <span class="svg-icon svg-icon-2 m-0">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M4.425 20.525C2.525 18.625 2.525 15.525 4.425 13.525L14.825 3.125C16.325 1.625 18.825 1.625 20.425 3.125C20.825 3.525 20.825 4.12502 20.425 4.52502C20.025 4.92502 19.425 4.92502 19.025 4.52502C18.225 3.72502 17.025 3.72502 16.225 4.52502L5.82499 14.925C4.62499 16.125 4.62499 17.925 5.82499 19.125C7.02499 20.325 8.82501 20.325 10.025 19.125L18.425 10.725C18.825 10.325 19.425 10.325 19.825 10.725C20.225 11.125 20.225 11.725 19.825 12.125L11.425 20.525C9.525 22.425 6.425 22.425 4.425 20.525Z" fill="currentColor" />
+                                        <path d="M9.32499 15.625C8.12499 14.425 8.12499 12.625 9.32499 11.425L14.225 6.52498C14.625 6.12498 15.225 6.12498 15.625 6.52498C16.025 6.92498 16.025 7.525 15.625 7.925L10.725 12.8249C10.325 13.2249 10.325 13.8249 10.725 14.2249C11.125 14.6249 11.725 14.6249 12.125 14.2249L19.125 7.22493C19.525 6.82493 19.725 6.425 19.725 5.925C19.725 5.325 19.525 4.825 19.125 4.425C18.725 4.025 18.725 3.42498 19.125 3.02498C19.525 2.62498 20.125 2.62498 20.525 3.02498C21.325 3.82498 21.725 4.825 21.725 5.925C21.725 6.925 21.325 7.82498 20.525 8.52498L13.525 15.525C12.325 16.725 10.525 16.725 9.32499 15.625Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <!--end::Upload attachement-->
+                            
+                            <button type="reset" class="btn btn-light me-3" data-kt-item-action="cancel">{{__ 'Discard'}}</button>
+                            <button type="submit" class="btn btn-primary" data-kt-item-action="submit">
+                                <span class="indicator-label">{{__ 'Save'}}</span>
+                                <span class="indicator-progress">{{__ 'Please wait...'}}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+
+                            
+                            <input type="hidden" name="mode" id="mode" value="{{mode}}">
+                            <input type="hidden" name="courseID" id="courseID" value="{{data.courseID}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card mb-5 mb-xl-8">
+                    <!--begin::Header-->
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold fs-3 mb-1">{{__ 'Employees'}}</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">{{__ 'list of employees who have enrolled in this course'}}</span>
+                        </h3>
+                        <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" data-bs-original-title="Click to add a user" data-kt-initialized="1">
+                            <button type="button" class="btn btn-sm btn-light btn-active-primary" data-kt-item-action="addEmployee">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect>
+                                </svg>
+                            </span>
+                            {{__ 'Add employee'}}</button>
+                        </div>
+                    </div>
+
+                    <div class="card-body py-3 ">
+                        <!--begin:::Tabs-->
+                        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x border-transparent fs-4 fw-semibold mb-5" id="tabHeader">
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-1 active" data-bs-toggle="tab" id="enrolled_employee_list_button" href="#enrolled_employee_list">
+                                <span class="svg-icon svg-icon-2 me-2">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"/>
+                                        <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"/>
+                                    </svg>
+                                </span>
+                                {{__ 'Enrolled'}}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-1" data-bs-toggle="tab" id="waiting_list_employee_list_button" href="#waiting_list_employee_list">
+                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
+                                <span class="svg-icon svg-icon-2 me-2">
+                                    <svg width="14" height="21" viewBox="0 0 14 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M12 6.20001V1.20001H2V6.20001C2 6.50001 2.1 6.70001 2.3 6.90001L5.6 10.2L2.3 13.5C2.1 13.7 2 13.9 2 14.2V19.2H12V14.2C12 13.9 11.9 13.7 11.7 13.5L8.4 10.2L11.7 6.90001C11.9 6.70001 12 6.50001 12 6.20001Z" fill="currentColor"/>
+                                        <path d="M13 2.20001H1C0.4 2.20001 0 1.80001 0 1.20001C0 0.600012 0.4 0.200012 1 0.200012H13C13.6 0.200012 14 0.600012 14 1.20001C14 1.80001 13.6 2.20001 13 2.20001ZM13 18.2H10V16.2L7.7 13.9C7.3 13.5 6.7 13.5 6.3 13.9L4 16.2V18.2H1C0.4 18.2 0 18.6 0 19.2C0 19.8 0.4 20.2 1 20.2H13C13.6 20.2 14 19.8 14 19.2C14 18.6 13.6 18.2 13 18.2ZM4.4 6.20001L6.3 8.10001C6.7 8.50001 7.3 8.50001 7.7 8.10001L9.6 6.20001H4.4Z" fill="currentColor"/>
+                                    </svg>
+                                </span>
+                                {{__ 'Waiting list'}}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-1" data-bs-toggle="tab" id="request_employee_list_button" href="#request_employee_list">
+                                <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm005.svg-->
+                                <span class="svg-icon svg-icon-2 me-2">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M22.9558 10.2848L21.3341 8.6398C21.221 8.52901 21.1317 8.39637 21.0715 8.24996C21.0114 8.10354 20.9816 7.94641 20.9841 7.78814V5.4548C20.9826 5.13514 20.9179 4.81893 20.7938 4.52433C20.6697 4.22973 20.4887 3.96255 20.261 3.73814C20.0333 3.51374 19.7636 3.33652 19.4672 3.21668C19.1709 3.09684 18.8538 3.03673 18.5341 3.0398H16.2008C16.0425 3.04229 15.8854 3.01255 15.739 2.95238C15.5925 2.89221 15.4599 2.80287 15.3491 2.6898L13.7158 1.0448C13.2608 0.590273 12.6439 0.334961 12.0008 0.334961C11.3576 0.334961 10.7408 0.590273 10.2858 1.0448L8.64078 2.66647C8.52999 2.77954 8.39735 2.86887 8.25094 2.92904C8.10452 2.98922 7.94739 3.01896 7.78911 3.01647H5.45578C5.13612 3.01799 4.8199 3.08266 4.5253 3.20675C4.23071 3.33085 3.96353 3.51193 3.73912 3.73959C3.51471 3.96724 3.3375 4.237 3.21766 4.53335C3.09781 4.82971 3.0377 5.14682 3.04078 5.46647V7.7998C3.04327 7.95808 3.01353 8.11521 2.95335 8.26163C2.89318 8.40804 2.80385 8.54068 2.69078 8.65147L1.04578 10.2848C0.591249 10.7398 0.335938 11.3567 0.335938 11.9998C0.335938 12.6429 0.591249 13.2598 1.04578 13.7148L2.66745 15.3598C2.78051 15.4706 2.86985 15.6032 2.93002 15.7496C2.99019 15.8961 3.01994 16.0532 3.01745 16.2115V18.5448C3.01897 18.8645 3.08363 19.1807 3.20773 19.4753C3.33182 19.7699 3.5129 20.0371 3.74056 20.2615C3.96822 20.4859 4.23798 20.6631 4.53433 20.7829C4.83068 20.9028 5.14779 20.9629 5.46745 20.9598H7.80078C7.95906 20.9573 8.11619 20.9871 8.2626 21.0472C8.40902 21.1074 8.54166 21.1967 8.65245 21.3098L10.2974 22.9548C10.7525 23.4093 11.3693 23.6646 12.0124 23.6646C12.6556 23.6646 13.2724 23.4093 13.7274 22.9548L15.3608 21.3331C15.4716 21.2201 15.6042 21.1307 15.7506 21.0706C15.897 21.0104 16.0542 20.9806 16.2124 20.9831H18.5458C19.1894 20.9831 19.8066 20.7275 20.2617 20.2724C20.7168 19.8173 20.9724 19.2001 20.9724 18.5565V16.2231C20.97 16.0649 20.9997 15.9077 21.0599 15.7613C21.12 15.6149 21.2094 15.4823 21.3224 15.3715L22.9674 13.7265C23.1935 13.5002 23.3726 13.2314 23.4944 12.9357C23.6162 12.64 23.6784 12.3231 23.6773 12.0032C23.6762 11.6834 23.6119 11.3669 23.4881 11.072C23.3643 10.7771 23.1834 10.5095 22.9558 10.2848Z" fill="currentColor"/>
+                                        <path d="M12.0039 15.4998C11.7012 15.4998 11.4109 15.38 11.1969 15.1668C10.9829 14.9535 10.8626 14.6643 10.8626 14.3627V13.9382C10.8467 13.2884 10.9994 12.6456 11.306 12.0718C11.6126 11.4981 12.0627 11.013 12.6126 10.6634C12.7969 10.561 12.9505 10.4114 13.0575 10.2302C13.1645 10.049 13.221 9.84266 13.2213 9.63242C13.2213 9.31073 13.0931 9.00223 12.8648 8.77476C12.6365 8.5473 12.3268 8.41951 12.0039 8.41951C11.6811 8.41951 11.3714 8.5473 11.1431 8.77476C10.9148 9.00223 10.7865 9.31073 10.7865 9.63242C10.7865 9.93399 10.6663 10.2232 10.4523 10.4365C10.2382 10.6497 9.94792 10.7695 9.64522 10.7695C9.34253 10.7695 9.05223 10.6497 8.83819 10.4365C8.62415 10.2232 8.50391 9.93399 8.50391 9.63242C8.50763 9.02196 8.67214 8.42317 8.98099 7.89592C9.28984 7.36868 9.7322 6.93145 10.2639 6.62796C10.7955 6.32447 11.3978 6.16535 12.0105 6.16651C12.6233 6.16767 13.225 6.32908 13.7554 6.63458C14.2859 6.94009 14.7266 7.37899 15.0335 7.9074C15.3403 8.43582 15.5025 9.03522 15.5039 9.64569C15.5053 10.2562 15.3458 10.8563 15.0414 11.3861C14.7369 11.9159 14.2983 12.3568 13.7692 12.6647C13.5645 12.8132 13.4003 13.0101 13.2913 13.2378C13.1824 13.4655 13.1322 13.7167 13.1453 13.9685V14.3931C13.1373 14.6894 13.0136 14.9708 12.8004 15.1776C12.5872 15.3843 12.3014 15.4999 12.0039 15.4998Z" fill="currentColor"/>
+                                        <path d="M12.0026 18.9998C12.6469 18.9998 13.1693 18.4775 13.1693 17.8332C13.1693 17.1888 12.6469 16.6665 12.0026 16.6665C11.3583 16.6665 10.8359 17.1888 10.8359 17.8332C10.8359 18.4775 11.3583 18.9998 12.0026 18.9998Z" fill="currentColor"/>
+                                    </svg>
+                                </span>
+                                {{__ 'Request'}}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-1" data-bs-toggle="tab" id="reject_employee_list_button" href="#reject_employee_list">
+                                <span class="svg-icon svg-icon-2 me-2">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"/>
+                                        <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor"/>
+                                        <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor"/>
+                                    </svg>
+                                </span>
+                                {{__ 'Rejected'}}</a>
+                            </li>
+                            <!--end:::Tab item-->
+                        </ul>
+
+                        <div class="tab-content mt-0" >
+                            <div class="tab-pane fade show active" id="enrolled_employee_list" role="tabpanel">
+                                <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                                    <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="enrolledTableSearch"  />
+                                    <table class="table align-middle table-row-dashed" id="enrolledTable">
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="waiting_list_employee_list" role="tabpanel">
+                                <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                                    <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="waitingListTableSearch"  />
+                                    <table class="table align-middle table-row-dashed" id="waitingListTable">
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="request_employee_list" role="tabpanel">
+                                <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                                    <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="requestListTableSearch"  />
+                                    <table class="table align-middle table-row-dashed" id="requestListTable">
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="reject_employee_list" role="tabpanel">
+                                <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                                    <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="rejectedListTableSearch"  />
+                                    <table class="table align-middle table-row-dashed" id="rejectedListTable">
+                                    </table>
+                                </div>
+                            </div>
+                            <!--end:::Tab pane-->
+                        </div>
+                        <!--end:::Tab content-->
+                    </div>
+
+    
+                </div>
+
+                
+            </div>
+            
+        </div>
+
+
+
+    </form>
+</div>
+
+
+<div class="modal fade" id="employee_modal" tabindex="-2" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered mw-900px" id="employee_modal_content">
+	</div>
+</div>
+
+
+<div class="modal fade" tabindex="-5" id="view_modal">
+    <div class="modal-dialog" id="view_modal_content">
+    </div>
+</div>
+
+			
+						
+<!--begin::Javascript-->
+
+<script type="text/javascript">
+    "use strict";
+
+    let mode;
+    let datatable = null
+    let enrolledTable = null
+    let waitingListTable = null
+    let requestListTable = null
+    let rejectedListTable = null
+    let filterSearch;
+    let courseID = ($('#courseID').val() && $('#courseID').val() != '')?$('#courseID').val():0
+
+    courseTypeChagne('{{data.courseType}}')
+    //ernrolledEmployee()
+
+    function courseTypeChagne(courseType){
+        if(courseType == 'internal'){
+             $('#isInternalCourseYesOrNo').html("{{__ 'Yes'}}")
+            $('#courseDepartmentDiv').hide()
+            $('#courseCategoryDiv').show('slow')
+        }
+        else{
+            $('#isInternalCourseYesOrNo').html("{{__ 'No'}}")
+            $('#courseCategoryDiv').hide()
+            $('#courseDepartmentDiv').show('slow')
+        }   
+    }
+
+    $('#openEnrollment').change(()=>{
+        const ADLogin = document.getElementById('openEnrollment');
+        if(ADLogin.checked) {
+            //$('#PasswordDiv').hide('slow')
+            $('#ADYesOrNo').html("{{__ 'Yes'}}")
+        }
+        else{
+            //$('#PasswordDiv').show('slow')
+            $('#ADYesOrNo').html("{{__ 'No'}}")
+        }
+        
+    })
+   
+
+   const initDropzone = (el) => {
+        if($('#mode').val() == 'add') return null
+        // set the dropzone container id
+        const id = '[data-kt-inbox-form="dropzone"]';
+        const courseID = ($('#courseID').val() && $('#courseID').val() != '')?$('#courseID').val():0
+        const dropzone = el.querySelector(id);
+        const uploadButton = el.querySelector('[data-kt-inbox-form="dropzone_upload"]');
+
+        
+        // set the preview element template
+        var previewNode = dropzone.querySelector(".dropzone-item");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+
+        var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
+            url: `{{CONFIG.BASE_URL}}course/addAttachemnts/${courseID}/`, // Set the url for your upload script location
+            parallelUploads: 20,
+            maxFilesize: 5, // Max filesize in MB
+            previewTemplate: previewTemplate,
+            previewsContainer: id + " .dropzone-items", // Define the container to display the previews
+            clickable: uploadButton // Define the element that should be used as click trigger to select files.
+        });
+
+        myDropzone.on("addedfile", function (file) {
+            // Hookup the start button
+            const dropzoneItems = dropzone.querySelectorAll('.dropzone-item');
+            dropzoneItems.forEach(dropzoneItem => {
+                dropzoneItem.style.display = '';
+            });
+        });
+
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function (progress) {
+            const progressBars = dropzone.querySelectorAll('.progress-bar');
+            progressBars.forEach(progressBar => {
+                progressBar.style.width = progress + "%";
+            });
+        });
+
+        myDropzone.on("sending", function (file) {
+            // Show the total progress bar when upload starts
+            const progressBars = dropzone.querySelectorAll('.progress-bar');
+            progressBars.forEach(progressBar => {
+                progressBar.style.opacity = "1";
+            });
+        });
+
+        // Hide the total progress bar when nothing"s uploading anymore
+        myDropzone.on("complete", function (progress) {
+            const progressBars = dropzone.querySelectorAll('.dz-complete');
+            
+            setTimeout(function () {
+                progressBars.forEach(progressBar => {
+                    progressBar.querySelector('.progress-bar').style.opacity = "0";
+                    progressBar.querySelector('.progress').style.opacity = "0";
+                });
+            }, 300);
+        });
+
+        myDropzone.on("success", function (file,response) {
+            if(response.success){
+                $(file.previewTemplate).append('<span class="documentID" style="display:none">'+response.documentID+'</span>');
+            }
+            else{
+                PSA.toast.error((response && response.message ? response.message :response))
+                $(file.previewElement).remove();
+            }
+            //saveDraft()
+
+        });
+
+        myDropzone.on("error", function (file, message, xhr) {
+            console.log('error',message)
+            PSA.toast.error((message && message.message ? message.message :message))
+            $(file.previewElement).remove();
+        });
+
+        myDropzone.on("removedfile", function (file) {
+            const documentID = $(file.previewTemplate).children('.documentID').text()
+            const formData =  '{"documentID":"'+documentID+'"}';
+            request('{{CONFIG.BASE_URL}}course/removeAttachemnts', {
+                method: 'POST',
+                body:  formData,
+            })
+            .then(response => {
+                if(response && response.success)
+                    $(file.previewElement).remove();
+                saveDraft()
+            })
+            .catch(PSA.exception.catch)
+        });
+    }
+
+    KTImageInput.init()
+    var KTAddItem = function () {
+
+         // Shared variables
+        const element = document.getElementById('itemContainer');
+        const form = element.querySelector('#itemForm');
+
+        // Init add schedule modal
+        var initAddItem = () => {
+            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+            var validator = FormValidation.formValidation(
+                form,
+                {
+                    fields: {
+                         'nameEn': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The full name (English) field is required."}}'
+                                }
+                            }
+                        },
+                         'nameAr': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The full name (Arabic) field is required."}}'
+                                }
+                            }
+                        },
+                         'quota': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The quota field is required."}}'
+                                }
+                            }
+                        },
+                         'location': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The location field is required."}}'
+                                }
+                            }
+                        },
+                         'amount': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The amount field is required."}}'
+                                }
+                            }
+                        },
+
+                        'weekdays': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "Please select at least one day in the weekdays field."}}'
+                                }
+                            }
+                        },
+                        
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                            rowSelector: '.fv-row',
+                            eleInvalidClass: '',
+                            eleValidClass: ''
+                        }),
+                        
+                    }
+                }
+            );
+            // Submit button handler
+            const submitButton = element.querySelector('[data-kt-item-action="submit"]');
+            submitButton.addEventListener('click', e => {
+                e.preventDefault();
+                // Validate form before submit
+                if (validator) {
+                    validator.validate().then(function (status) {
+                        if (status == 'Valid') {
+                            // Show loading indication
+                            submitButton.setAttribute('data-kt-indicator', 'on');
+                            // Disable button to avoid multiple click 
+                            submitButton.disabled = true;
+                            const formData = new FormData(validator.form); 
+                            
+                            request('{{CONFIG.BASE_URL}}course', {
+                                method: 'POST',
+                                files: true,
+                                body: formData
+                            })
+                            .then(response => {
+                                if(response && response.success){
+                                    //console.log(response)
+                                    if($('#mode').val() == 'add'){
+                                        PSA.toast.success("{{__ 'course created successfully'}} ")
+                                        //window.location.replace(`{{CONFIG.BASE_URL}}product/${response.productID}/form`)
+                                        $('#mode').val('edit') 
+                                        $('#courseID').val(response.courseID) 
+                                        courseID = response.courseID
+                                        //reload all table with new url with updated course id.
+                                        enrolledTable.ajax.url('{{CONFIG.BASE_URL}}course/'+courseID+'/getEnrolledEmployees').load();
+                                        waitingListTable.ajax.url('{{CONFIG.BASE_URL}}course/'+courseID+'/getWaitingListEmployees').load();
+                                        requestListTable.ajax.url('{{CONFIG.BASE_URL}}course/'+courseID+'/getRequestListEmployees').load();
+                                        rejectedListTable.ajax.url('{{CONFIG.BASE_URL}}course/'+courseID+'/getRjectedtListEmployees').load();
+                                        initDropzone(form);
+                                    }
+                                    else
+                                        PSA.toast.success("{{__ 'course updated successfully'}} ")
+                                    //$('#kt_table_item').DataTable().ajax.reload();
+                                    //modal.hide();
+                                        submitButton.setAttribute('data-kt-indicator', 'off');
+                                        submitButton.disabled = false;
+                                }
+                                else{
+                                    submitButton.setAttribute('data-kt-indicator', 'off');
+                                    submitButton.disabled = false;
+                                    PSA.toast.error("{{__ 'Something wrong , please try agian'}} ")
+                                }
+                                //location.reload();
+                            })
+                            .catch(PSA.exception.catch)
+                            
+                        } else {
+                            Swal.fire({
+                                text: '{{__ "Sorry, looks like there are some errors detected, please try again."}}',
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "{{__ 'ok'}}",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            const cancelButton = element.querySelector('[data-kt-item-action="cancel"]');
+            cancelButton.addEventListener('click', e => {
+                e.preventDefault();
+                window.location.replace(`{{CONFIG.BASE_URL}}course`)
+            });
+
+            var tags = new Tagify(form.querySelector('[name="weekdays"]'), {
+                whitelist: [
+                    { value: 'SUN', textEn: 'Sunday', textAr: 'الأحد' },
+                    { value: 'MON', textEn: 'Monday', textAr: 'الأثنين' },
+                    { value: 'TUE', textEn: 'Tuesday', textAr: 'الثلاثاء' },
+                    { value: 'WED', textEn: 'Wednesday', textAr: 'الأربعاء' },
+                    { value: 'THU', textEn: 'Thursday', textAr: 'الخميس' },
+                    { value: 'FRI', textEn: 'Friday', textAr: 'الجمعه' },
+                    { value: 'SAT', textEn: 'Saturday', textAr: 'السبت' },
+                ],
+                maxTags: 7,
+                tagTextProp: getLang() == 'ar' ? 'textAr' : 'textEn', 
+                dropdown: {
+                    maxItems: 7,           // <- mixumum allowed rendered suggestions
+                    enabled: 0,             // <- show suggestions on focus
+                    closeOnSelect: false ,   // <- do not hide the suggestions dropdown once an item has been selected
+                    searchKeys:['value','textEn','textAr'],
+                    mapValueTo:getLang() == 'ar' ? 'textAr' : 'textEn'
+                }
+            });
+            tags.on("change", function(){
+                // Revalidate the field when an option is chosen
+                validator.revalidateField('tags');
+            });
+
+            $('#courseDepartmentID').select2()
+            $('#courseCategoryID').select2()
+            $("#dateRange").daterangepicker({
+                timePicker: true,
+                timePicker24Hour: true,
+                startDate: moment('{{dateToString data.startDate}}','MM/DD/YYYY HH:mm:ss'),
+                endDate: moment('{{dateToString data.endDate}}','MM/DD/YYYY HH:mm:ss'),
+                locale: {
+                    format: "MM/DD/YYYY HH:mm:ss"
+                },
+            });
+
+            $('input[name="courseType"]').on('change', function() {
+                let courseType = $(this).val();
+                courseTypeChagne(courseType)
+            });
+
+            const addEmployee = element.querySelector('[data-kt-item-action="addEmployee"]');
+            addEmployee.addEventListener('click', e => {
+                e.preventDefault();
+                if($('#mode').val() == 'add'){
+                    Swal.fire({
+                        text: '{{__ "Please save the course before ernrolling employee"}}',
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "{{__ 'ok'}}",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                }
+                else{
+                    $('#form_modal_content').html(null)
+                    let courseID = $('#courseID').val()
+                    request(`/course/${courseID}/enrolledEmployeeForm`)
+                        .then(response => {
+                            if (response) {
+                                $('#employee_modal_content').html(response)
+                                $("#employee_modal").modal('show');
+                            } else {
+                                PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
+                            }
+                        })
+                        .catch(PSA.exception.catch)
+                }
+            });
+        }
+        return {
+            // Public functions
+            init: function () {
+                initDropzone(form);
+                initAddItem();
+            }
+        };
+    }();
+    // On document ready
+    KTUtil.onDOMContentLoaded(function () {
+        KTAddItem.init();
+    });
+
+    
+    enrolledTable = $("#enrolledTable").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}course/'+courseID+'/getEnrolledEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 10, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: true,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')"  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'email',
+                orderable: true,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" onclick="View(${row.employeeID},'${getLang() == 'ar' ? row.fullNameAr : row.fullNameEn}')" >${row.employee.email}</div>`
+            },
+
+            {
+                name:'action',
+                orderable:false,
+                data : row => {
+                    return `
+                        <a onclick="removeEmployee(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `
+                }
+            }
+            
+        ]
+    });
+  	let enrolledTableSearch = document.querySelector('[data-kt-user-table-filter="enrolledTableSearch"]');
+	enrolledTableSearch.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		enrolledTable.search(e.target.value).draw();
+	});
+
+    waitingListTable = $("#waitingListTable").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}course/'+courseID+'/getWaitingListEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 10, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: true,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')"  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'email',
+                orderable: true,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.fullNameAr : row.fullNameEn}')" >${row.employee.email}</div>`
+            },
+
+            {
+                name:'action',
+                orderable:false,
+                data : row => {
+                    return `
+                        <a onclick="removeEmployee(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `
+                }
+            }
+            
+        ]
+    });
+  	let waitingListTableSearch = document.querySelector('[data-kt-user-table-filter="waitingListTableSearch"]');
+	waitingListTableSearch.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		waitingListTable.search(e.target.value).draw();
+	});
+
+    requestListTable = $("#requestListTable").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}course/'+courseID+'/getRequestListEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 10, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: true,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')"  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'email',
+                orderable: true,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.fullNameAr : row.fullNameEn}')" >${row.employee.email}</div>`
+            },
+
+            {
+                name:'action',
+                orderable:false,
+                data : row => {
+                    return `
+                        <a onclick="removeEmployee(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `
+                }
+            }
+            
+        ]
+    });
+  	let requestListTableSearch = document.querySelector('[data-kt-user-table-filter="waitingListTableSearch"]');
+	requestListTableSearch.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		requestListTable.search(e.target.value).draw();
+	});
+
+
+    rejectedListTable = $("#rejectedListTable").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}course/'+courseID+'/getRjectedtListEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 10, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: true,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')"  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'email',
+                orderable: true,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" onclick="View(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.fullNameAr : row.fullNameEn}')" >${row.employee.email}</div>`
+            },
+
+            {
+                name:'action',
+                orderable:false,
+                data : row => {
+                    return `
+                        <a onclick="removeEmployee(${row.enrolledEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `
+                }
+            }
+            
+        ]
+    });
+  	let rejectedListTableSearch = document.querySelector('[data-kt-user-table-filter="rejectedListTableSearch"]');
+	rejectedListTableSearch.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		rejectedListTableSearch.search(e.target.value).draw();
+	});
+
+
+
+    function enrollEmployee(employeeID,name){
+        //const courseID = $('#courseID').val()
+        let formData = `{"employeeID":"${employeeID}","courseID":"${courseID}"}` 
+
+        PSA.confirmation({  
+            body: __('Are you sure you want to enroll')+' '+name,
+            icon:'warning'
+        })
+        .then(() => {
+            request(`/course/enrolledEmployeeAdd`,{
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response) {
+                    PSA.toast.success(name+' '+__('Enrolled to the course'))
+                    //ernrolledEmployee()
+                    datatable.ajax.reload(null, false);
+                    enrolledTable.ajax.reload(null, false);
+                    waitingListTable.ajax.reload(null, false);
+                    requestListTable.ajax.reload(null, false);
+                    rejectedListTable.ajax.reload(null, false);
+                }
+                else{
+                    PSA.toast.error(__('Something went wrong, please try again'),__('Error'))
+                } 
+            })
+            .catch(PSA.exception.catch)
+        }).catch(() => {});
+    }
+
+    function removeEmployee(enrolledEmployeeID, name) {
+        //const courseID = $('#courseID').val()
+        let formData = `{"enrolledEmployeeID":"${enrolledEmployeeID}"}`
+
+        PSA.confirmation({
+            body: __('Are you sure you want to remove') + ' ' + name,
+            icon: 'warning'
+        })
+        .then(() => {
+            request(`/course/enrolledEmployeeRemove`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response) {
+                    PSA.toast.success(name + ' ' + __('removed from the course'))
+                    $("#view_modal").modal('hide');
+                    enrolledTable.ajax.reload(null, false);
+                    waitingListTable.ajax.reload(null, false);
+                    requestListTable.ajax.reload(null, false);
+                    rejectedListTable.ajax.reload(null, false);
+                    //datatable.ajax.reload();
+                }
+                else {
+                    PSA.toast.error(__('Something went wrong, please try again'), __('Error'))
+                }
+            })
+            .catch(PSA.exception.catch)
+        }).catch(() => { });
+    }
+
+
+    function moveEmployee(enrolledEmployeeID,moveTo = 'enroll', name) {
+        //const courseID = $('#courseID').val()
+        let formData = `{"enrolledEmployeeID":"${enrolledEmployeeID}","moveTo":"${moveTo}"}`
+        PSA.confirmation({
+            body: __('Are you sure you want to move') + ' ' + name,
+            icon: 'warning'
+        })
+        .then(() => {
+            request(`/course/moveEmployee`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if(response) {
+                    if(moveTo === 'enroll'){
+                        PSA.toast.success(name + ' ' + __('enrolled to the course'))
+                        $("#enrolled_employee_list_button").get(0).click();
+                    }
+                    else if(moveTo === 'waiting'){
+                        PSA.toast.warning(name + ' ' + __('moved to waiting list'))
+                        $("#waiting_list_employee_list_button").get(0).click();  
+                    }
+                    else if(moveTo === 'reject'){
+                        PSA.toast.error(name + ' ' + __('is rejected from course'))
+                        $("#reject_employee_list_button").get(0).click();
+                    }
+                    else {
+                        PSA.toast.info(name + ' ' + __('moved to request'))
+                        $("#request_employee_list_button").get(0).click();
+                    }
+                    $("#view_modal").modal('hide');
+                    enrolledTable.ajax.reload(null, false);
+                    waitingListTable.ajax.reload(null, false);
+                    requestListTable.ajax.reload(null, false);
+                    rejectedListTable.ajax.reload(null, false);
+                }
+                else {
+                    PSA.toast.error(__('Something went wrong, please try again'), __('Error'))
+                }
+            })
+            .catch(PSA.exception.catch)
+        }).catch(() => { });
+    }
+    function View(employeeID) {
+        request(`/course/${employeeID}/employeeView`)
+            .then(response => {
+                if (response) {
+                    $('#view_modal_content').html(response)
+                    $("#view_modal").modal('show');
+                } else {
+                    PSA.toast.error('{{__ "Something went wrong, please try again"}}', '{{__ "Error"}}')
+                }
+            })
+            .catch(PSA.exception.catch)
+    }
+
+    function deleteDocument(documentID){
+        PSA.confirmation({body:  "{{__ 'Are you sure you want to delete the attachment? '}}"})
+            .then(() => {
+                const formData =  '{"documentID":"'+documentID+'"}';
+                request('{{CONFIG.BASE_URL}}course/removeAttachemnts', {
+                    method: 'POST',
+                    body:  formData,
+                })
+                .then(response => {
+                    if(response && response.success){
+                        $("#DocumentDiv"+documentID).remove();
+                        PSA.toast.success('{{__ "Attachment removed successfully."}}')
+                    }
+                })
+                .catch(PSA.exception.catch)
+            })
+            .catch(e=>{})
+        }
+
+    function viewDocument(documentID){
+        request(`/course/${documentID}/documentViewModal`)
+        .then(response => {
+            if (response) {
+                $('#view_modal_content').html(response)
+                $("#view_modal").modal('show');
+            } else {
+                PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
+            }
+        })
+        .catch(PSA.exception.catch)
+    }
+
+    
+</script>
+
+
+

@@ -1,0 +1,401 @@
+<style>
+    .dataTables_wrapper table thead{
+    display:none;
+}
+</style>
+
+<div class="app-container" id="itemContainer">
+    <form id="itemForm" class="form" action="#"  enctype="multipart/form-data">
+
+        <div class="row mt-5">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="fv-row mb-7">
+                            <label class="required fw-semibold fs-6 mb-2">{{__ 'Name Arabic'}}</label>
+                            <div class="input-group mb-0">
+                                <input type="text" name="nameAr" id="nameAr" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Course name in Arabic'}}" value="{{data.nameAr}}" />
+                                <span class="input-group-text" id="basic-addon2">
+                                    <i class="fas fa-language fs-4"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="required fw-semibold fs-6 mb-2">{{__ 'Name English'}}</label>
+                            <div class="input-group mb-0">
+                                <input type="text" name="nameEn" id="nameEn" class="form-control  mb-3 mb-lg-0" placeholder="{{__ 'Course name in English'}}" value="{{data.nameEn}}" />
+                                <span class="input-group-text" id="basic-addon2">
+                                    <i class="fas fa-language fs-4"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row g-9  mt-2" >
+                            <div class="col-md-12 fv-row">
+                                    <div class="input-group">
+                                    <span class="input-group-text">{{__ 'Description'}}</span>
+                                    <textarea class="form-control" aria-label="With textarea" name="description" id="description">{{data.description}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center pt-0 ">
+                            <button type="reset" class="btn btn-light me-3" data-kt-item-action="cancel">{{__ 'Discard'}}</button>
+                            <button type="submit" class="btn btn-primary" data-kt-item-action="submit">
+                                <span class="indicator-label">{{__ 'Save'}}</span>
+                                <span class="indicator-progress">{{__ 'Please wait...'}}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                            <input type="hidden" name="mode" id="mode" value="{{mode}}">
+                            <input type="hidden" name="courseRequestID" id="courseRequestID" value="{{data.courseRequestID}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card mb-5 mb-xl-8">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold fs-3 mb-1">{{__ 'Employees'}}</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">{{__ 'list of employees who have enrolled in this course'}}</span>
+                        </h3>
+                        <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" data-bs-original-title="Click to add a user" data-kt-initialized="1">
+                            <button type="button" class="btn btn-sm btn-light btn-active-primary" data-kt-item-action="addRequestEmployee">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor"></rect>
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect>
+                                </svg>
+                            </span>
+                            {{__ 'Add employee'}}</button>
+                        </div>
+                    </div>
+                    <div class="card-body py-3 ">
+                        <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline">
+                            <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="{{__ 'Search by username, full name or email...'}}" data-kt-user-table-filter="enrolledTableSearch"  />
+                            <table class="table align-middle table-row-dashed" id="enrolledTable">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="employee_modal" tabindex="-2" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered mw-900px" id="employee_modal_content">
+	</div>
+</div>
+
+<div class="modal fade" tabindex="-5" id="view_modal">
+    <div class="modal-dialog" id="view_modal_content">
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    "use strict";
+
+    let mode;
+    let datatable = null
+    let enrolledTable = null
+    let filterSearch;
+    let courseRequestID = ($('#courseRequestID').val() && $('#courseRequestID').val() != '')?$('#courseRequestID').val():0
+
+    var KTAddItem = function () {
+        const element = document.getElementById('itemContainer');
+        const form = element.querySelector('#itemForm');
+        // Init add schedule modal
+        var initAddItem = () => {
+            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+            var validator = FormValidation.formValidation(
+                form,
+                {
+                    fields: {
+                         'nameEn': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The full name (English) field is required."}}'
+                                }
+                            }
+                        },
+                         'nameAr': {
+                            validators: {
+                                notEmpty: {
+                                    message: '{{__ "The full name (Arabic) field is required."}}'
+                                }
+                            }
+                        },
+                        
+                        
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                            rowSelector: '.fv-row',
+                            eleInvalidClass: '',
+                            eleValidClass: ''
+                        }),
+                        
+                    }
+                }
+            );
+            // Submit button handler
+            const submitButton = element.querySelector('[data-kt-item-action="submit"]');
+            submitButton.addEventListener('click', e => {
+                e.preventDefault();
+                // Validate form before submit
+                if (validator) {
+                    validator.validate().then(function (status) {
+                        if (status == 'Valid') {
+                            // Show loading indication
+                            submitButton.setAttribute('data-kt-indicator', 'on');
+                            // Disable button to avoid multiple click 
+                            submitButton.disabled = true;
+                            const formData = new FormData(validator.form); 
+                            
+                            request('{{CONFIG.BASE_URL}}courseRequest', {
+                                method: 'POST',
+                                files: true,
+                                body: formData
+                            })
+                            .then(response => {
+                                if(response){
+                                    //console.log(response)
+                                    if($('#mode').val() == 'add'){
+                                        PSA.toast.success("{{__ 'course request created successfully'}} ")
+                                        //window.location.replace(`{{CONFIG.BASE_URL}}product/${response.productID}/form`)
+                                        $('#mode').val('edit') 
+                                        $('#courseRequestID').val(response.courseRequestID) 
+                                        courseRequestID = response.courseRequestID
+                                        enrolledTable.ajax.url('{{CONFIG.BASE_URL}}courseRequest/'+courseRequestID+'/getEnrolledEmployees').load();
+                                    }
+                                    else
+                                        PSA.toast.success("{{__ 'course request updated successfully'}} ")
+                                    submitButton.setAttribute('data-kt-indicator', 'off');
+                                    submitButton.disabled = false;
+                                }
+                                else{
+                                    submitButton.setAttribute('data-kt-indicator', 'off');
+                                    submitButton.disabled = false;
+                                    PSA.toast.error("{{__ 'Something wrong , please try agian'}} ")
+                                }
+                                //location.reload();
+                            })
+                            .catch(PSA.exception.catch)
+                            
+                        } else {
+                            // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            Swal.fire({
+                                text: '{{__ "Sorry, looks like there are some errors detected, please try again."}}',
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "{{__ 'ok'}}",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            const cancelButton = element.querySelector('[data-kt-item-action="cancel"]');
+            cancelButton.addEventListener('click', e => {
+                e.preventDefault();
+                window.location.replace(`{{CONFIG.BASE_URL}}courseRequest`)
+            });
+
+       
+
+            const addEmployee = element.querySelector('[data-kt-item-action="addRequestEmployee"]');
+            addEmployee.addEventListener('click', e => {
+                e.preventDefault();
+                if($('#mode').val() == 'add'){
+                    Swal.fire({
+                        text: '{{__ "Please save the course before ernrolling employee"}}',
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "{{__ 'ok'}}",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                }
+                else{
+                    $('#form_modal_content').html(null)
+                    let courseRequestID = $('#courseRequestID').val()
+                    request(`/courseRequest/${courseRequestID}/enrolledEmployeeForm`)
+                        .then(response => {
+                            if (response) {
+                                $('#employee_modal_content').html(response)
+                                $("#employee_modal").modal('show');
+                            } else {
+                                PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
+                            }
+                        })
+                        .catch(PSA.exception.catch)
+                }
+            })
+        }
+        return {
+            // Public functions
+            init: function () {
+                initAddItem();
+            }
+        };
+    }();
+    // On document ready
+    KTUtil.onDOMContentLoaded(function () {
+        KTAddItem.init();
+    });
+
+    
+    enrolledTable = $("#enrolledTable").DataTable({
+        ...PSA.defaults.datatable({url:'{{CONFIG.BASE_URL}}courseRequest/'+courseRequestID+'/getEnrolledEmployees'}), 
+        //order: [[1, 'desc']],
+        //'orderable': false,
+        lengthChange: false, // Hide the page size selector
+        pageLength: 10, // Set the default page size to 10
+        // Other DataTa
+        'columns' : [
+            { 	
+                name:getLang() == 'ar' ? 'fullNameAr' : 'fullNameEn',
+                orderable: true,
+                data : function ( row) {
+                    return `
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                <a onclick="View(${row.requestedEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" style="cursor:pointer" >
+                                    <div class="symbol-label">
+                                        ${(row.employee.profilePhotoDocumentID)?
+                                            `<img src="{{CONFIG.BASE_URL}}employee/document/${row.employeeID}" class="w-100" style="cursor:pointer"/>`
+                                        :
+                                            PSA.nameToIcon(row.employee.fullNameAr,row.employee.fullNameEn,getLang())
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a onclick="View(${row.requestedEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="text-gray-800 text-hover-primary mb-1" style="cursor:pointer">${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}</a>
+                                <span onclick="View(${row.requestedEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')"  style="cursor:pointer">${row.employee.militaryNumber}</span>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            {
+                name:'email',
+                orderable: true,
+                data : row =>  `<div class="badge badge-light fw-bold" style="cursor:pointer" onclick="View(${row.employeeID},'${getLang() == 'ar' ? row.fullNameAr : row.fullNameEn}')" >${row.employee.email}</div>`
+            },
+
+            {
+                name:'action',
+                orderable:false,
+                data : row => {
+                    return `
+                        <a onclick="removeEmployee(${row.requestedEmployeeID},'${getLang() == 'ar' ? row.employee.fullNameAr : row.employee.fullNameEn}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <span class="svg-icon svg-icon-3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `
+                }
+            }
+            
+        ]
+    });
+  	let enrolledTableSearch = document.querySelector('[data-kt-user-table-filter="enrolledTableSearch"]');
+	enrolledTableSearch.addEventListener('keyup', function (e) {
+        //loadDataTable();
+		enrolledTable.search(e.target.value).draw();
+	});
+
+    function enrollEmployee(employeeID,name){
+        //const courseRequestID = $('#courseRequestID').val()
+        let formData = `{"employeeID":"${employeeID}","courseRequestID":"${courseRequestID}"}` 
+
+        PSA.confirmation({  
+            body: __('Are you sure you want to enroll')+' '+name,
+            icon:'warning'
+        })
+        .then(() => {
+            request(`/courseRequest/enrolledEmployeeAdd`,{
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response) {
+                    PSA.toast.success(name+' '+__('Enrolled to the course'))
+                    datatable.ajax.reload(null, false);
+                    enrolledTable.ajax.reload(null, false);
+
+                }
+                else{
+                    PSA.toast.error(__('Something went wrong, please try again'),__('Error'))
+                } 
+            })
+            .catch(PSA.exception.catch)
+        }).catch(() => {});
+    }
+
+    function removeEmployee(requestedEmployeeID,name) {
+        //const courseRequestID = $('#courseRequestID').val()
+        let formData = `{"requestedEmployeeID":"${requestedEmployeeID}"}`
+        PSA.confirmation({
+            body: __('Are you sure you want to remove') + ' ' + name,
+            icon: 'warning'
+        })
+        .then(() => {
+            request(`/courseRequest/enrolledEmployeeRemove`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response) {
+                    PSA.toast.warning(name + ' ' + __('removed from the course'))
+                    enrolledTable.ajax.reload(null, false);
+
+                    //$(button).closest('tr').remove()
+                    //$(button).closest('tr').fadeOut('slow', function() {
+                     //   $(button).closest('tr').remove();
+                    //});
+                }
+                else {
+                    PSA.toast.error(__('Something went wrong, please try again'), __('Error'))
+                }
+            })
+            .catch(PSA.exception.catch)
+        }).catch(() => { });
+    }
+
+   
+    function View(employeeID) {
+        request(`/courseRequest/${employeeID}/employeeView`)
+            .then(response => {
+                if (response) {
+                    $('#view_modal_content').html(response)
+                    $("#view_modal").modal('show');
+                } else {
+                    PSA.toast.error('{{__ "Something went wrong, please try again"}}', '{{__ "Error"}}')
+                }
+            })
+            .catch(PSA.exception.catch)
+    }
+
+
+</script>
+
+
+

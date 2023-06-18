@@ -1,0 +1,150 @@
+<style>
+    .timeline-label .timeline-label {
+        width: 150px;
+    }
+    .timeline-label:before{
+        left: 151px;
+        right: 151px;
+    }
+</style>
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-grow-1">
+                <div class="symbol symbol-45px me-5">
+                    {{{bgImage}}}
+                </div>
+                <div class="d-flex flex-column">
+                    <a class="text-gray-900 text-hover-primary fs-6 fw-bold">{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}</a>
+                    <div class="badge badge-lg badge-light-primary d-inline">{{data.employee.userType}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+           <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <div class="modal-body">
+
+       
+
+        <div class="d-flex flex-stack fs-4 py-3">
+            <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">{{__ 'Details'}}
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+                    </svg>
+                </span>
+            </span></div>
+            {{!-- <span data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Edit customer details" data-kt-initialized="1">
+                <a onclick="removeEmployee({{data.enrolledEmployeeID}},'{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-light-danger" >{{__ 'Remove Employee'}}</a>
+            </span> --}}
+        </div>
+
+        <div class="separator"></div>
+
+        <div id="kt_user_view_details" class="collapse show mt-4">
+
+            <div class="timeline-label">
+                
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Username'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.employee.userName}}</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Military Number'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.employee.militaryNumber}}</div>
+                </div>
+
+
+                <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Mobile'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.employee.mobile}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Email'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{data.employee.email}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Department'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{? LNG '==' 'ar' data.employee.department.nameAr data.employee.department.nameEn}}</div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-label fw-bold text-gray-800 fs-6">{{__ 'Course Level'}}</div>
+                    <div class="timeline-badge">
+                        <i class="fa fa-genderless text-gray fs-1"></i>
+                    </div>
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{? LNG '==' 'ar' data.employee.courseLevel.nameAr data.employee.courseLevel.nameEn}}</div>
+                </div>
+               
+            </div>
+
+            
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        {{#if data.isHeEnrolled}}
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'waiting','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-warning"><i class="fas fa-hourglass fs-4 me-2"></i> {{__ 'Move to Waiting List'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'reject','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-danger"><i class="fas fa-times fs-4 me-2"></i> {{__ 'Reject'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'request','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-primary"><i class="fas fa-question-circle fs-4 me-2"></i> {{__ 'Move to Request'}}</a>
+        {{/if}}
+
+        {{#if data.isOnWaitingList}}
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'reject','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-danger"><i class="fas fa-times fs-4 me-2"></i> {{__ 'Reject'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'enroll','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-success"><i class="fas fa-check fs-4 me-2"></i> {{__ 'Enroll'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'request','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-primary"><i class="fas fa-question-circle fs-4 me-2"></i> {{__ 'Move to Request'}}</a>
+        {{/if}}
+
+        {{#if data.rejected}}
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'waiting','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-warning"><i class="fas fa-hourglass fs-4 me-2"></i> {{__ 'Move to Waiting List'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'enroll','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-success"><i class="fas fa-check fs-4 me-2"></i> {{__ 'Enroll'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'request','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-primary"><i class="fas fa-question-circle fs-4 me-2"></i> {{__ 'Move to Request'}}</a>
+        {{/if}}
+
+        {{#if data.requested}}
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'waiting','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-warning"><i class="fas fa-hourglass fs-4 me-2"></i> {{__ 'Move to Waiting List'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'enroll','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-success"><i class="fas fa-check fs-4 me-2"></i> {{__ 'Enroll'}}</a>
+            <a onclick="moveEmployee({{data.enrolledEmployeeID}},'reject','{{? LNG '==' 'ar' data.employee.fullNameAr data.employee.fullNameEn}}')" class="btn btn-sm btn-danger"><i class="fas fa-times fs-4 me-2"></i> {{__ 'Reject'}}</a>
+        {{/if}}
+     
+        
+
+
+    </div>
+
+
+
+
+
+  
+</div>

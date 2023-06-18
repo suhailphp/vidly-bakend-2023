@@ -1,0 +1,36 @@
+<head><base href="../"/>
+		<title>{{__ 'PSA Training'}}</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="PSA Training" />
+		<meta name="keywords" content="PSA Training" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="PSA Training" />
+		<meta property="og:url" content="https://psa.ac.ae" />
+
+		<link rel="shortcut icon" href="{{CONFIG.BASE_URL}}favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		{{!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" /> --}}
+		<!--end::Fonts-->
+		<!--begin::Vendor Stylesheets(used for this page only)-->
+		<link href="{{CONFIG.BASE_URL}}dist/assets/plugins/custom/datatables/datatables.bundle{{? LNG '==' 'ar' '.rtl' ''}}.css" rel="stylesheet" type="text/css" />
+		<link href="{{CONFIG.BASE_URL}}dist/assets/plugins/custom/vis-timeline/vis-timeline.bundle{{? LNG '==' 'ar' '.rtl' ''}}.css" rel="stylesheet" type="text/css" />
+		<!--end::Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+		<link href="{{CONFIG.BASE_URL}}dist/assets/plugins/global/plugins.bundle{{? LNG '==' 'ar' '.rtl' ''}}.css" rel="stylesheet" type="text/css" />
+		<link href="{{CONFIG.BASE_URL}}dist/assets/css/style.bundle{{? LNG '==' 'ar' '.rtl' ''}}.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+		
+		<script type="text/javascript" src="{{CONFIG.BASE_URL}}{{LNG}}.js?v={{CONFIG.VERSION}}"></script> 
+		<script>
+			const BASE_URL = '{{BASE_URL}}';
+			const LNG = '{{LNG}}';
+            const DIR = '{{DIR}}';
+			let clientTr = TR;
+            function __(key){ 
+				{{#compare CONFIG.ENV '===' 'development'}}if(!clientTr[key] && key)request('{{CONFIG.BASE_URL}}_t?t='+key).then().catch(){{/compare}}
+				return clientTr[key] || key;
+			}
+		</script>
+	</head>

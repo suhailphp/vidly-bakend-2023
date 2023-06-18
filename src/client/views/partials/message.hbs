@@ -1,0 +1,22 @@
+
+
+    {{#if errorMessage}}
+        <script>
+            PSA.toast.error('{{{errorMessage}}}')
+        </script>
+    {{/if}}
+    {{#if warningMessage}}
+        <script>
+            PSA.toast.warning('{{{warningMessage}}}')
+        </script>
+    {{/if}}
+    {{#if successMessage}}
+        <script>
+            PSA.toast.success('{{{successMessage}}}')
+        </script>
+    {{/if}}
+    {{#if infoMessage}}
+        <script>
+            PSA.toast.info('{{{infoMessage}}}')
+        </script>
+    {{/if}}
