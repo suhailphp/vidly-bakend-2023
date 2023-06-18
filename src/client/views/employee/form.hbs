@@ -100,68 +100,7 @@
                             </div>
                         </div>
 
-                        {{#if levelData}}
-                            {{#each levelData}}
-                                <div class=" fv-row fv-plugins-icon-container mb-2" id="Dep{{this.level}}" >
-                                    {{#compare this.level '===' 1}}
-                                        <label class=" fs-6 fw-semibold ">{{__ 'Department'}}</label>
-                                    {{/compare}}
-                                    <select class="form-select " data-control=""  data-placeholder="{{__ 'Select department'}}" name="departmentID" id="departmentID{{this.level}}" onchange="DepChange(this)">
-                                        <option></option>
-                                        {{#each this.departments}}
-                                            <option value="{{this.departmentID}}" {{#compare this.departmentID '===' ../this.curDepartmentID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
-                                        {{/each}}
-                                    </select>
-                                    <script type="text/javascript">
-                                        $('#departmentID{{this.level}}').select2();
-                                    </script>
-                                </div>
-                            {{/each}}
-
-                            {{#each emptyDiv}}
-                                <div class="fv-row fv-plugins-icon-container" id="Dep{{this.level}}" style="display: none;"></div>
-                            {{/each}}
-
-                        {{else}}
-
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep1" >
-                                <label class=" fs-6 fw-semibold mb-2">{{__ 'Department'}}</label>
-                                <select class="form-select " data-control=""  data-placeholder="{{__ 'Select parent department'}}" name="departmentID" id="departmentID" onchange="DepChange(this)">
-                                    <option></option>
-                                    {{#each departments}}
-                                        <option value="{{this.departmentID}}" {{#compare this.departmentID '===' ../data.departmentID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep2" style="display: none;">
-                            </div>
-                            <div class="v-row fv-plugins-icon-container mb-2" id="Dep3" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep4" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep5" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep6" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep7" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep8" style="display: none;">
-                            </div>
-                            <div class="fv-row fv-plugins-icon-container mb-2" id="Dep9" style="display: none;">
-                            </div>
-                        {{/if}}
-
-                        <div class="row g-9 " data-select2-id="select2-data-123-s6w3">
-                            <div class="col-md-12 fv-row fv-plugins-icon-container" >
-                                    <label class=" fs-6 fw-semibold mb-2">{{__ 'Course Level'}}</label>
-                                    <select class="form-select " data-control=""  data-placeholder="{{__ 'Select Course Level'}}" name="courseLevelID" id="courseLevelID" >
-                                        <option></option>
-                                        {{#each courseLevel}}
-                                            <option value="{{this.courseLevelID}}" {{#compare this.courseLevelID '===' ../data.courseLevelID}}selected{{/compare}}>{{? ../LNG '==' 'ar' this.nameAr this.nameEn}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                        </div>
+                        
 
                     </div>
                     <div class="card-footer">

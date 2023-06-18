@@ -68,18 +68,7 @@ module.exports = class EmployeeService {
           as: 'deletedBy',
           attributes: ['fullNameAr', 'fullNameEn', 'employeeID', 'profilePhotoDocumentID'],
         },
-        {
-          model: Models.Department,
-          required: false,
-          as: 'department',
-          attributes: ['nameAr', 'nameEn', ],
-        },
-        {
-          model: Models.CourseLevel,
-          required: false,
-          as: 'courseLevel',
-          attributes: ['nameAr', 'nameEn', ],
-        },
+        
       ];
       const employee = await Models.Employee.findOne({
         where: { employeeID },
@@ -170,8 +159,6 @@ module.exports = class EmployeeService {
     email,
     mobile,
     militaryNumber,
-    departmentID,
-    courseLevelID,
     ADLogin,
     password,
     profilePhoto,
@@ -204,8 +191,6 @@ module.exports = class EmployeeService {
         email,
         mobile,
         militaryNumber,
-        departmentID,
-        courseLevelID,
         ADLogin,
         password,
         passwordSalt,
@@ -229,8 +214,6 @@ module.exports = class EmployeeService {
     email,
     mobile,
     militaryNumber,
-    departmentID,
-    courseLevelID,
     ADLogin,
     password,
     profilePhoto,
@@ -266,8 +249,6 @@ module.exports = class EmployeeService {
       employee.email = email;
       employee.mobile = mobile;
       employee.militaryNumber = militaryNumber;
-      employee.departmentID = departmentID;
-      employee.courseLevelID = courseLevelID;
       employee.updatedEmployeeID = currentEmployeeID;
       employee.updatedOn = Date.now();
       await employee.save({ transaction });

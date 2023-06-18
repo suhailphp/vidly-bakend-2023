@@ -550,5 +550,10 @@
 	"Are you sure you want to reject this course request?": "Are you sure you want to reject this course request?",
 	"The course request has been rejected.": "The course request has been rejected.",
 	"Rejected By": "Rejected By",
-	"Rejected On": "Rejected On"
+	"Rejected On": "Rejected On",
+	"Genre": "Genre",
+	"Add Genre": "Add Genre",
+	"new genre created successfully": "new genre created successfully",
+	"Edit Genre": "Edit Genre",
+	"Genre Trash list": "Genre Trash list"
 }

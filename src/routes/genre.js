@@ -25,13 +25,13 @@ const {
   ApplicationError,
 } = require('../modules/error');
 
-const CourseLevelService = require('../services/courseLevel');
+const GrenreService = require('../services/genre');
 
-const moduleName = 'courseLevel';
+const moduleName = 'genre';
 
 module.exports = (app) => {
-  app.use('/courseLevel', route);
-  const courseLevelService = new CourseLevelService();
+  app.use('/genre', route);
+  const genreService = new GrenreService();
   route.get(
     '/',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
@@ -39,25 +39,16 @@ module.exports = (app) => {
       try {
         if (!req.xhr) {
           const data = {
-            title: req.__('Course Level'),
+            title: req.__('Genre'),
             breadcrumb: breadcrumbs.init(__filename, moduleName).add('list'),
           };
-          return res.render('courseLevel/list', data);
+          return res.render('genre/list', data);
         }
-
-        // console.log(req.query);
-        const data = await courseLevelService.get({
-          query: req.query,
+        const data = await genreService.get({
+          req,
           deleted: false,
         });
-
-        // console.log(data);
-        return res.json({
-          data: data.rows,
-          draw: req.query.draw,
-          recordsTotal: data.totalCount,
-          recordsFiltered: data.count,
-        });
+        return res.json(data);
       } catch (e) {
         next(e);
       }
@@ -71,24 +62,17 @@ module.exports = (app) => {
       try {
         if (!req.xhr) {
           const data = {
-            title: req.__('Course Level Trash list'),
+            title: req.__('Genre Trash list'),
             breadcrumb: breadcrumbs.init(__filename, moduleName).add('Trash'),
           };
-          return res.render('courseLevel/list', data);
+          return res.render('genre/list', data);
         }
 
-        // console.log(req.query.order);
-        const data = await courseLevelService.get({
-          query: req.query,
+         const data = await genreService.get({
+          req,
           deleted: true,
         });
-          // console.log(data);
-        return res.json({
-          data: data.rows,
-          draw: req.query.draw,
-          recordsTotal: data.totalCount,
-          recordsFiltered: data.count,
-        });
+        return res.json(data);
       } catch (e) {
         next(e);
       }
@@ -102,15 +86,15 @@ module.exports = (app) => {
       try {
 
 
-        const resData = await courseLevelService.getOne(req.body.courseLevelID);
+        const resData = await genreService.getOne(req.body.genreID);
         if (resData) {
-          await courseLevelService.update({
+          await genreService.update({
             ...req.body,
             updatedEmployeeID: req.Employee.employeeID,
           });
           return res.send(true);
         }
-        await courseLevelService.insert({
+        await genreService.insert({
           ...req.body,
           createdEmployeeID: req.Employee.employeeID,
         });
@@ -132,7 +116,7 @@ module.exports = (app) => {
           data: { },
         };
 
-        res.render('courseLevel/form', data);
+        res.render('genre/form', data);
       } catch (e) {
         next(e);
       }
@@ -140,7 +124,7 @@ module.exports = (app) => {
   );
 
   route.get(
-    '/:courseLevelID/edit',
+    '/:genreID/edit',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
     async (req, res, next) => {
       try {
@@ -149,9 +133,9 @@ module.exports = (app) => {
           mode: 'edit',
         };
 
-        data.data = await courseLevelService.getOne(req.params.courseLevelID);
+        data.data = await genreService.getOne(req.params.genreID);
         if (data.data) {
-          res.render('courseLevel/form', data);
+          res.render('genre/form', data);
         } else res.send(false);
       } catch (e) {
         next(e);
@@ -160,14 +144,14 @@ module.exports = (app) => {
   );
 
   route.get(
-    '/:courseLevelID/view',
+    '/:genreID/view',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
     async (req, res, next) => {
       try {
         const data = { layout: null };
-        data.data = await courseLevelService.getOne(req.params.courseLevelID);
+        data.data = await genreService.getOne(req.params.genreID);
         if (data.data) {
-          return res.render('courseLevel/view', data);
+          return res.render('genre/view', data);
         } res.send(false);
       } catch (e) {
         next(e);
@@ -176,11 +160,11 @@ module.exports = (app) => {
   );
 
   route.get(
-    '/:courseLevelID/status',
+    '/:genreID/status',
     // gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
     async (req, res, next) => {
       try {
-        const data = await courseLevelService.changeStatus(req.params.courseLevelID);
+        const data = await genreService.changeStatus(req.params.genreID);
         res.send(data);
       } catch (e) {
         next(e);
@@ -189,11 +173,11 @@ module.exports = (app) => {
   );
 
   route.get(
-    '/:courseLevelID/trash',
+    '/:genreID/trash',
     gatekeeper.authorization(['SUPER-ADMIN']),
     async (req, res, next) => {
       try {
-        const data = await courseLevelService.trash(req.params.courseLevelID, req.Employee.employeeID);
+        const data = await genreService.trash(req.params.genreID, req.Employee.employeeID);
         res.send(data);
       } catch (e) {
         next(e);
@@ -202,11 +186,11 @@ module.exports = (app) => {
   );
 
   route.get(
-    '/:courseLevelID/delete',
+    '/:genreID/delete',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
     async (req, res, next) => {
       try {
-        const data = await courseLevelService.delete(req.params.courseLevelID);
+        const data = await genreService.delete(req.params.genreID);
         res.send(data);
       } catch (e) {
         next(e);

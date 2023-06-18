@@ -30,14 +30,8 @@ module.exports.authenticateUser = function () {
       } else if (req.session && req.session.userName) {
         const employeeRepo = await Models.Employee.findOne({
           where: { userName: req.session.userName, active: true },
-          attributes:['employeeID','fullNameEn','fullNameAr','email','mobile','profilePhotoDocumentID','userType','userPrivileges','departmentID'],
-          include:[
-            {
-              model:Models.Department,
-              as:'department',
-              attributes:['nameAr','nameEn']
-            }
-          ]
+          attributes:['employeeID','fullNameEn','fullNameAr','email','mobile','profilePhotoDocumentID','userType','userPrivileges'],
+          
         });
         if (employeeRepo) {
           if(employeeRepo.userType === 'COMPETENCY-USER'){

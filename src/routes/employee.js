@@ -25,8 +25,7 @@ const {
 } = require('../modules/error');
 
 const EmployeeService = require('../services/employee');
-const DepartmentService = require('../services/department');
-const CourseLevelService = require('../services/courseLevel');
+
 const { log } = require('console');
 
 const moduleName = 'Employee';
@@ -34,8 +33,7 @@ const moduleName = 'Employee';
 module.exports = (app) => {
   app.use('/employee', route);
   const employeeService = new EmployeeService();
-  const departmentService = new DepartmentService();
-  const courseLevelService = new CourseLevelService();
+
   route.get(
     '/',
     gatekeeper.authorization(['ADMIN', 'SUPER-ADMIN']),
@@ -128,8 +126,7 @@ module.exports = (app) => {
         const data = {
           mode: 'add',
           bgImage: `${appConfig.BASE_URL}dist/assets/media/avatars/blank.png`,
-          departments: await departmentService.getAll({ level: 1 }),
-          courseLevel: await courseLevelService.getAll(),
+
         };
         res.render('employee/form', data);
       } catch (e) {
@@ -147,8 +144,7 @@ module.exports = (app) => {
           layout: null,
           mode: 'add',
           bgImage: `${appConfig.BASE_URL}dist/assets/media/avatars/blank.png`,
-          departments: await departmentService.getAll({ level: 1 }),
-          courseLevel: await courseLevelService.getAll(),
+
         };
         res.render('employee/formModal', data);
       } catch (e) {
@@ -164,8 +160,7 @@ module.exports = (app) => {
       try {
         const data = {
           mode: 'edit',
-          departments: await departmentService.getAll({ level: 1, departmentID: req.params.departmentID }),
-          courseLevel: await courseLevelService.getAll(),
+
         };
         data.data = await employeeService.getOne(req.params.employeeID);
         if (data.data) {
@@ -175,33 +170,7 @@ module.exports = (app) => {
             data.bgImage = `${appConfig.BASE_URL}dist/assets/media/avatars/blank.png`;
           }
 
-          data.levelData = [];
-          data.emptyDiv = [];
-          // const curDep = await Models.Department.findOne({ where: { DepartmentID: data.ParentID } });
-          const curDep = await departmentService.getOne(data.data.departmentID);
-          if (curDep && curDep.level >= 1) {
-            let { level, parentID } = curDep;
-            let curDepartmentID = curDep.departmentID;
-            for (let i = level; i >= 1; i--) {
-              const levelData = {
-                curDepartmentID,
-                level,
-                departments: await departmentService.getAll({ level, parentID }),
-              };
-              data.levelData[i] = levelData;
-              // setting data for parent department
-              const nextDep = await departmentService.getOne(parentID);
-              if (nextDep) {
-                curDepartmentID = nextDep.departmentID;
-                parentID = nextDep.parentID;
-                level = nextDep.level;
-              }
-            }
-          }
-          // setting empty div data for ajax
-          for (let i = data.levelData.length; i < 10; i++) {
-            data.emptyDiv.push({ level: i });
-          }
+          
           res.render('employee/form', data);
         } else res.send(false);
       } catch (e) {

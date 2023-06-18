@@ -144,7 +144,7 @@
 												</svg>
 											</span>
 											<!--end::Svg Icon-->
-											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{data.activeInternalCourse}}" >0</div>
+											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="5" >0</div>
 										</div>
 										<div class="fw-semibold fs-6 text-gray-400">{{__ 'Internal trainings'}}</div>
 										<!--end::Label-->
@@ -160,7 +160,7 @@
 												</svg>
 											</span>
 											<!--end::Svg Icon-->
-											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{data.activeExternallCourse}}">0</div>
+											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="5">0</div>
 										</div>
 										<div class="fw-semibold fs-6 text-gray-400">{{__ 'External trainings'}}</div>
 										<!--end::Label-->
@@ -176,7 +176,7 @@
 												</svg>
 											</span>
 											<!--end::Svg Icon-->
-											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{data.totalActiveCourse}}">0</div>
+											<div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="5">0</div>
 										</div>
 										<div class="fw-semibold fs-6 text-gray-400">{{__ 'Total Training'}}</div>
 										<!--end::Label-->
@@ -188,10 +188,10 @@
 							<div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
 								<div class="d-flex justify-content-between w-100 mt-auto mb-2">
 									<span class="fw-semibold fs-6 text-gray-400">{{__ 'Complete rate'}}</span>
-									<span class="fw-bold fs-6">{{data.completedPercentage}}%</span>
+									<span class="fw-bold fs-6">5%</span>
 								</div>
 								<div class="h-5px mx-3 w-100 bg-light mb-3">
-									<div class="bg-{{data.completedPercentageStyle}} rounded h-5px" role="progressbar" style="width: {{data.completedPercentage}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="bg-success rounded h-5px" role="progressbar" style="width:5%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<!--end::Progress-->
@@ -237,58 +237,7 @@
 </div>
 
 <script type="text/javascript">
-	$(function() {
-		showTrainig()
-	});
-	function showTrainig(type = 'owernview'){
-		$('#elementDiv').html('<img src="{{CONFIG.BASE_URL}}dist/assets/media/loading.gif" style="width: 100%;" >')
-		if(type === 'internal'){
-			$("#owerviewAtag").removeClass("active");
-			$("#externalAtag").removeClass("active");
-			$("#internalAtag").addClass("active");
 
-			request('{{CONFIG.BASE_URL}}internal')
-			.then(response => {
-				$('#elementDiv').html(response)
-			})
-			.catch(PSA.exception.catch)
-		}
-		else if(type === 'external'){
-			$("#internalAtag").removeClass("active");
-			$("#owerviewAtag").removeClass("active");
-			$("#externalAtag").addClass("active");
-
-			request('{{CONFIG.BASE_URL}}external')
-			.then(response => {
-				$('#elementDiv').html(response)
-			})
-			.catch(PSA.exception.catch)
-		}
-		else{
-			$("#internalAtag").removeClass("active");
-			$("#externalAtag").removeClass("active");
-			$("#owerviewAtag").addClass("active");
-
-			request('{{CONFIG.BASE_URL}}owerview')
-			.then(response => {
-				$('#elementDiv').html(response)
-			})
-			.catch(PSA.exception.catch)
-		} 
-	}
-
-	function ViewCourse(courseID){
-        request(`{{CONFIG.BASE_URL}}${courseID}/courseView`)
-        .then(response => {
-            if (response) {
-                $('#course_view_modal_content').html(response)
-                $("#course_view_modal").modal('show');
-            } else {
-                PSA.toast.error('{{__ "Something went wrong, please try again"}}','{{__ "Error"}}')
-            }
-        })
-        .catch(PSA.exception.catch)
-    }
 </script>
 
 

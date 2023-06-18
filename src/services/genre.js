@@ -7,6 +7,7 @@ const {
   ApplicationError,
 } = require('../modules/error');
 const validation = require('../utilities/validation');
+const pagination = require('../utilities/pagination');
 const {
   sequelize,
   Op,
@@ -19,74 +20,40 @@ const logger = require('../modules/logger');
 const Utils = require('../utilities');
 
 module.exports = class courseLevelService {
-  /* get Function */
+
   async get({
-    query,
-    attributes,
-    deleted,
+    req,
+    deleted = false,
   }) {
     try {
       logger.silly('Getting user db record');
-      const language = i18n.getLocale();
-      const searchQuery = query.search ? query.search.value.trim() : '';
-      // console.log(searchQuery);
-      const start = parseInt(query.start);
-      const length = parseInt(query.length);
-      // console.log(query.order);
-      const order = query.order ? query.order[0] : {
-        column: 'createdOn',
-        dir: 'ASC',
-      };
-      // console.log('coloumn', order.column);
-      if (['nameAr', 'nameEn', 'createdOn', ].indexOf(order.column) === -1) throw new BadRequestError(('Invalid input provided'));
-
-      const where = {
-        deleted,
-        [Op.or]: [
-          { nameAr: { [Op.like]: `%${searchQuery}%` } },
-          { nameEn: { [Op.like]: `%${searchQuery}%` } },
-        ],
-      };
-
-      let queryAttributes = { exclude: [] };
-      if (attributes && attributes.length) {
-        queryAttributes = attributes;
-      }
-      // if (order.column && order.column === 'createdBy') order.column = ['$userCreatedBy.fullNameEn$'];
-      const data = await Models.CourseLevel.findAndCountAll(
+      const resData = await Models.Genre.findAndCountAll(
         {
-          where,
-          attributes: queryAttributes,
-          order: [
-            [order.column, order.dir],
-          ],
-          limit: length,
-          offset: start,
+          ...pagination.init(req, {
+            where: { deleted },
+            defaultSort: ['createdOn', 'DESC'],
+            whereLike: ['name'],
+            allowedSortColumns: ['name','createdOn'],
+          }),
         },
       );
-       //console.log('data', data.rows[0]);
-      const count = await Models.CourseLevel.count({ where: { deleted } });
-      // console.log(count);
-      return {
-        ...data,
-        totalCount: count,
-      };
+
+      return pagination.res(req, resData);
     } catch (e) {
-      // if (transaction) await transaction.rollback();
       throw new ApplicationError(e.message);
     }
   }
 
-  async getOne(courseLevelID) {
+  async getOne(genreID) {
     try {
      
-      const resData = await Models.CourseLevel.findOne({
+      const resData = await Models.Genre.findOne({
         include:[
           {model:Models.Employee,as:'createdBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
           {model:Models.Employee,as:'updatedBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
           {model:Models.Employee,as:'deletedBy',attributes:['fullNameEn','fullNameAr','profilePhotoDocumentID', 'employeeID']},
         ],
-        where: { courseLevelID },
+        where: { genreID },
       });
       return (resData);
     } catch (e) {
@@ -97,9 +64,9 @@ module.exports = class courseLevelService {
   async getAll(cond = null) {
     try {
       const where = { active: true, deleted: false };
-      const resData = await Models.CourseLevel.findAll({
+      const resData = await Models.Genre.findAll({
         where,
-        attributes: ['nameAr', 'nameEn', 'courseLevelID','level'],
+        attributes: ['name', 'genreID'],
       });
       return (resData);
     } catch (e) {
@@ -110,18 +77,14 @@ module.exports = class courseLevelService {
 
   /* PostFunction */
   async insert({
-    nameEn,
-    nameAr,
-    level,
+    name,
     createdEmployeeID,
   }) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      await Models.CourseLevel.create({
-        nameEn,
-        nameAr,
-        level,
+      await Models.Genre.create({
+        name,
         createdEmployeeID,
       }, { transaction });
       await transaction.commit();
@@ -133,19 +96,15 @@ module.exports = class courseLevelService {
   }
 
   async update({
-    nameEn,
-    nameAr,
-    courseLevelID,
-    level,
+    name,
+    genreID,
     updatedEmployeeID,
   }) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      const resData = await Models.CourseLevel.findOne({ where: { courseLevelID }, transaction });
-      resData.nameEn = nameEn;
-      resData.nameAr = nameAr;
-      resData.level = level;
+      const resData = await Models.Genre.findOne({ where: { genreID }, transaction });
+      resData.name = name;
       resData.updatedEmployeeID = updatedEmployeeID;
       resData.updatedOn = Date.now();
       await resData.save({ transaction });
@@ -157,11 +116,11 @@ module.exports = class courseLevelService {
     }
   }
 
-  async changeStatus(courseLevelID) {
+  async changeStatus(genreID) {
     try {
-      const data = await Models.CourseLevel.findOne({
-        where: { courseLevelID },
-        attributes: ['courseLevelID', 'active'],
+      const data = await Models.Genre.findOne({
+        where: { genreID },
+        attributes: ['genreID', 'active'],
       });
       data.active = !data.active;
       await data.save();
@@ -171,11 +130,11 @@ module.exports = class courseLevelService {
     }
   }
 
-  async trash(courseLevelID, deletedEmployeeID) {
+  async trash(genreID, deletedEmployeeID) {
     try {
-      const resData = await Models.CourseLevel.findOne({
-        where: { courseLevelID },
-        attributes: ['courseLevelID', 'deleted'],
+      const resData = await Models.Genre.findOne({
+        where: { genreID },
+        attributes: ['genreID', 'deleted'],
       });
       resData.deleted = !resData.deleted;
       if (resData.deleted) {
@@ -192,13 +151,13 @@ module.exports = class courseLevelService {
     }
   }
 
-  async delete(courseLevelID) {
+  async delete(genreID) {
     let transaction;
     try {
       transaction = await Models.sequelize.transaction();
-      const data = await Models.CourseLevel.findOne({
-        where: { courseLevelID },
-        attributes: ['courseLevelID'],
+      const data = await Models.Genre.findOne({
+        where: { genreID },
+        attributes: ['genreID'],
         transaction,
       });
       await data.destroy({ transaction });
