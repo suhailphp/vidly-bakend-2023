@@ -87,6 +87,20 @@ module.exports = class movieService {
     }
   }
 
+  async getOneForAPI(movieID) {
+    try {
+      const resData = await Models.Movie.findOne({
+        attributes:['movieID','title','genreID','dailyRentalRate','numberInStock'],
+        where: { movieID },
+      });
+      return (resData);
+    } catch (e) {
+      throw new ApplicationError(e.message);
+    }
+  }
+
+
+
 
   /* PostFunction */
   async insert({
@@ -94,7 +108,7 @@ module.exports = class movieService {
     dailyRentalRate,
     numberInStock,
     genreID,
-    createdEmployeeID,
+    createdEmployeeID=null,
   }) {
     let transaction;
     try {
@@ -109,7 +123,7 @@ module.exports = class movieService {
       await transaction.commit();
       return true;
     } catch (e) {
-      console.log(e)
+      //console.log(e)
       if (transaction) await transaction.rollback();
       throw new ApplicationError(e.message);
     }
@@ -184,7 +198,7 @@ module.exports = class movieService {
         where: { movieID },
         attributes: ['movieID', 'deleted'],
       });
-      if(resData.delete){
+      if(resData.deleted){
         throw new Error('Movie already deleted')
       }
       resData.deleted = true;
