@@ -41,8 +41,22 @@ module.exports = (app) => {
   route.get(
     '/api/',
     async (req,res,next)=>{
+      res.header("Access-Control-Allow-Origin", "*");
       const data = await movieService.getAll()
       res.send(data)
+    }
+  )
+
+   route.delete(
+    '/api/:movieID',
+    async (req,res,next)=>{
+      res.header("Access-Control-Allow-Origin", "*");
+       try {
+        await movieService.trash(req.params.movieID);
+        res.send(true);
+      } catch (e) {
+        return res.status(404).send("The Movie with the given ID was not found.");
+      }
     }
   )
 

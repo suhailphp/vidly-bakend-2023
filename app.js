@@ -104,7 +104,7 @@ app.use(session({
 // eslint-disable-next-line import/order
 const middlewares = require('./src/middlewares/index');
 
-app.use(middlewares.gatekeeper.authenticateUser(Models));
+//app.use(middlewares.gatekeeper.authenticateUser(Models));
 
 i18n.configure({
   locales: ['en', 'ar'],

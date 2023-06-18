@@ -38,6 +38,7 @@ module.exports = (app) => {
   route.get(
     '/api/',
     async (req,res,next)=>{
+      res.header("Access-Control-Allow-Origin", "*");
       const data = await genreService.getAll()
       res.send(data)
     }

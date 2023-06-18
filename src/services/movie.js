@@ -156,7 +156,7 @@ module.exports = class movieService {
     }
   }
 
-  async trash(movieID, deletedEmployeeID) {
+  async trash(movieID, deletedEmployeeID = null) {
     try {
       const resData = await Models.Movie.findOne({
         where: { movieID },
@@ -173,6 +173,7 @@ module.exports = class movieService {
       await resData.save();
       return (resData);
     } catch (e) {
+      console.log(e)
       throw new ApplicationError(e);
     }
   }
