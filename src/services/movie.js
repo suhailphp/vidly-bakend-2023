@@ -135,7 +135,7 @@ module.exports = class movieService {
     numberInStock,
     genreID,
     movieID,
-    updatedEmployeeID,
+    updatedEmployeeID=null,
   }) {
     let transaction;
     try {

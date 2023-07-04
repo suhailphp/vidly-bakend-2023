@@ -43,6 +43,7 @@ module.exports = (app) => {
     '/movie/',
     async (req,res,next)=>{
       try{
+        delete req.body.movieID
         const data = await movieService.insert(req.body)
         res.send(data)
       }
@@ -51,6 +52,20 @@ module.exports = (app) => {
       }
     }
   )
+
+  route.put(
+    '/movie/',
+    async (req,res,next)=>{
+      try{
+        const data = await movieService.update(req.body)
+        res.send(data)
+      }
+      catch(e){
+        res.status(400).send('Please pass the correct values for movies')
+      }
+    }
+  )
+
 
    route.delete(
     '/movie/:movieID',
