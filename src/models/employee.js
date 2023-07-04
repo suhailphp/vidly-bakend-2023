@@ -19,6 +19,7 @@ module.exports = (sequelize) => {
       userType: { // ADMIN, SUPER-ADMIN, USER
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue:'USER'
       },
       userPrivileges: {
         type: DataTypes.TEXT,

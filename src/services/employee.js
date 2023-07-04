@@ -259,6 +259,42 @@ module.exports = class EmployeeService {
       throw new ApplicationError(e.message);
     }
   }
+
+  //insert from api
+  async insertAPI({
+    fullNameEn,
+    userName,
+    email,
+    mobile,
+    militaryNumber,
+    password,
+  }) {
+    let transaction;
+    try {
+      console.log(fullNameEn)
+      transaction = await Models.sequelize.transaction();
+      const { passwordSalt, passwordHash } = Utils.crypto.getHashSalt(password);
+      password = passwordHash;
+      const employee = await Models.Employee.create({
+        fullNameEn,
+        fullNameAr:fullNameEn,
+        userName,
+        userType:'USER',
+        email,
+        mobile,
+        militaryNumber,
+        ADLogin:false,
+        password,
+        passwordSalt,
+        createdEmployeeID: 1,
+      }, { transaction });
+      await transaction.commit();
+      return employee;
+    } catch (e) {
+      if (transaction) await transaction.rollback();
+      throw new ApplicationError(e.message);
+    }
+  }
   /* UserName checking Function */
   async checkUserName(userName, employeeID = null) {
     try {

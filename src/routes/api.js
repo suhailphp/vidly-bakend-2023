@@ -2,6 +2,7 @@ const { Router } = require('express');
 const route = Router();
 const GrenreService = require('../services/genre');
 const MovieService = require('../services/movie');
+const EmployeeService = require('../services/employee');
 const moduleName = 'api';
 
 module.exports = (app) => {
@@ -9,6 +10,7 @@ module.exports = (app) => {
   app.use('/api', route);
   const genreService = new GrenreService();
   const movieService = new MovieService();
+  const employeeService = new EmployeeService();
 
   route.get(
     '/movie/',
@@ -45,7 +47,7 @@ module.exports = (app) => {
       try{
         delete req.body.movieID
         const data = await movieService.insert(req.body)
-        res.send(data)
+        return res.send(data)
       }
       catch(e){
         res.status(400).send('Please pass the correct values for movies')
@@ -92,5 +94,26 @@ module.exports = (app) => {
       }
     }
   )
+
+route.post(
+    '/employee/',
+    async (req, res, next) => {
+      try {
+        
+
+        if (await employeeService.checkUserName(req.body.userName)) { 
+          return res.status(401).send("User name is note available, plese chose another one.");
+        }
+        const resData = await employeeService.insertAPI({
+          ...req.body,
+        });
+        return res.send(resData);
+      } catch (e) {
+        //console.log(e)
+        next(e);
+      }
+    },
+  );
+
   return route;
 };
