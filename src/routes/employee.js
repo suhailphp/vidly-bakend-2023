@@ -25,9 +25,6 @@ const {
 } = require('../modules/error');
 
 const EmployeeService = require('../services/employee');
-
-const { log } = require('console');
-
 const moduleName = 'Employee';
 
 module.exports = (app) => {

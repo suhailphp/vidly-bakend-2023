@@ -99,8 +99,6 @@ route.post(
     '/employee/',
     async (req, res, next) => {
       try {
-        
-
         if (await employeeService.checkUserName(req.body.userName)) { 
           return res.status(401).send("User name is note available, plese chose another one.");
         }
