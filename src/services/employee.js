@@ -19,7 +19,6 @@ const Models = require('../models');
 const logger = require('../modules/logger');
 const Utils = require('../utilities');
 const pagination = require('../utilities/pagination');
-const { log } = require('console');
 
 module.exports = class EmployeeService {
 

@@ -27,6 +27,7 @@ module.exports = {
   HOST_URL: process.env.HOST_URL,
   BASE_URL: process.env.BASE_URL,
   APP_LOGO_URL: process.env.APP_LOGO_URL || '/dist/assets/media/logos/logo-psa.svg',
+  JWT_SECRET:process.env.JWT_SECRET,
   SESSION: {
     COOKIE_NAME: process.env.COOKIE_NAME,
     SECRET: process.env.SESSION_SECRET,

@@ -3,7 +3,10 @@ const route = Router();
 const GrenreService = require('../services/genre');
 const MovieService = require('../services/movie');
 const EmployeeService = require('../services/employee');
+const Utils = require('../utilities');
 const moduleName = 'api';
+const appConfig = require('../config');
+const jwt = require("jsonwebtoken");
 
 module.exports = (app) => {
 
@@ -96,16 +99,46 @@ module.exports = (app) => {
   )
 
 route.post(
-    '/employee/',
+    '/register/',
     async (req, res, next) => {
       try {
-        if (await employeeService.checkUserName(req.body.userName)) { 
+        console.log(req.body)
+        if (await employeeService.checkUserName(req.body.userName)) 
           return res.status(401).send("User name is note available, plese chose another one.");
-        }
         const resData = await employeeService.insertAPI({
           ...req.body,
         });
         return res.send(resData);
+      } catch (e) {
+        //console.log(e)
+        next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/auth/',
+    async (req, res, next) => {
+      try {
+        //console.log(req.body)
+        const { userName } = req.body;
+        const { password } = req.body;
+        const employee = await employeeService.getUserName(userName);
+        if(!employee) 
+          return res.status(401).send("Employee not registerd, please try again!");
+        const passwordHash = await Utils.crypto.getHash(password, employee.passwordSalt);
+        if(employee.password === passwordHash) {
+          req.session.userName = userName;
+          employee.lastLoggedIn = Date.now();
+          await employee.save();
+          //return res.send(employee);
+          //console.log(appConfig.JWT_SECRET)
+          const token = jwt.sign({ employee }, appConfig.JWT_SECRET, {
+            expiresIn: "1h",
+          });
+          return res.send(token)
+        }
+        return res.status(401).send("Username or password is wrong, please try again !");
       } catch (e) {
         //console.log(e)
         next(e);
